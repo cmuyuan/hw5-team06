@@ -57,6 +57,7 @@ public class QA4MREResultCasConsumer extends CasConsumer_ImplBase {
 		String outFileName = mOutputDir + "/" + docId + ".xmi";
 		try {
 			File outFile = new File(outFileName);
+			System.out.println("writing to"+outFile);
 			this.writeXmi(aCAS, outFile);
 		} catch (Exception e) {
 			e.printStackTrace();
