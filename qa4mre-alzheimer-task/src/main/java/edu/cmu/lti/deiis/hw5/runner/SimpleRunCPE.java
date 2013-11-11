@@ -36,7 +36,7 @@ public class SimpleRunCPE extends Thread {
    */
   private long mInitCompleteTime;
 
-  /**
+  /**	
    * Constructor for the class.
    * 
    * @param args

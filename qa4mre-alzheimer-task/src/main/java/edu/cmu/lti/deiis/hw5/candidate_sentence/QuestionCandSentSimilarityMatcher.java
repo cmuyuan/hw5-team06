@@ -20,6 +20,7 @@ import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.Sentence;
+import edu.cmu.lti.qalab.types.Synonym;
 import edu.cmu.lti.qalab.types.TestDocument;
 import edu.cmu.lti.qalab.utils.Utils;
 
@@ -62,6 +63,7 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			Question question=qaSet.get(i).getQuestion();
 			System.out.println("========================================================");
 			System.out.println("Question: "+question.getText());
+			
 			String searchQuery=this.formSolrQuery(question);
 			if(searchQuery.trim().equals("")){
 				continue;
@@ -117,7 +119,13 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 		ArrayList<NounPhrase>nounPhrases=Utils.fromFSListToCollection(question.getNounList(), NounPhrase.class);
 		
 		for(int i=0;i<nounPhrases.size();i++){
-			solrQuery+="nounphrases:\""+nounPhrases.get(i).getText()+"\" ";			
+			solrQuery+="nounphrases:\""+nounPhrases.get(i).getText()+"\" ";		
+			/*NounPhrase np = nounPhrases.get(i);
+			FSList x = np.getSynonyms();
+			ArrayList<Synonym> synonymList = Utils.fromFSListToCollection(np.getSynonyms(),Synonym.class);
+			for (Synonym syn : synonymList ){
+				System.out.println(syn.getText());
+			}*/
 		}
 		
 		ArrayList<NER>neList=Utils.fromFSListToCollection(question.getNerList(), NER.class);
@@ -125,7 +133,7 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			solrQuery+="namedentities:\""+neList.get(i).getText()+"\" ";
 		}
 		solrQuery=solrQuery.trim();
-		
+		System.out.println(solrQuery);
 		
 		return solrQuery;
 	}
