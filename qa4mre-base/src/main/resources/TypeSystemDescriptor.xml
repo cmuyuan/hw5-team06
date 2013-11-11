@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <name>typeSystemDescriptor</name>
   <description/>
   <version>1.0</version>
@@ -52,6 +53,11 @@
           <description/>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.qalab.types.NER</elementType>
+        </featureDescription>
+      <featureDescription>
+          <name>interrogative</name>
+          <description>Is this sentence a question? TRUE if yes, FALSE if no</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -248,6 +254,11 @@
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.qalab.types.Dependency</elementType>
         </featureDescription>
+      <featureDescription>
+          <name>category</name>
+          <description>What kind of answer is this? proper noun, common noun, quantity, noun phrase, etc.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
@@ -288,6 +299,12 @@
           <description/>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.qalab.types.Token</elementType>
+        </featureDescription>
+      <featureDescription>
+          <name>category</name>
+          <description>What kind of question is this? Who, what, where, when, why or which answer is a true statement, etc.
+Different categories of questions require different answers (proper noun, common noun, verb phrase, etc.)</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
