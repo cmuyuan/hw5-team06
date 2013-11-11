@@ -12,8 +12,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon May 13 14:41:33 EDT 2013
- * XML source: /media/alkesh/Windows7_OS/Users/alkesh/git/qa4mre-cse/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
+ * Updated by JCasGen Sun Nov 10 19:51:29 EST 2013
+ * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class Answer extends Annotation {
   /** @generated
@@ -259,6 +259,24 @@ public class Answer extends Annotation {
     if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_dependencies == null)
       jcasType.jcas.throwFeatMissing("dependencies", "edu.cmu.lti.qalab.types.Answer");
     jcasType.ll_cas.ll_setRefValue(addr, ((Answer_Type)jcasType).casFeatCode_dependencies, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: category
+
+  /** getter for category - gets What kind of answer is this? proper noun, common noun, quantity, noun phrase, etc.
+   * @generated */
+  public String getCategory() {
+    if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Answer");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Answer_Type)jcasType).casFeatCode_category);}
+    
+  /** setter for category - sets What kind of answer is this? proper noun, common noun, quantity, noun phrase, etc. 
+   * @generated */
+  public void setCategory(String v) {
+    if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Answer");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Answer_Type)jcasType).casFeatCode_category, v);}    
   }
 
     

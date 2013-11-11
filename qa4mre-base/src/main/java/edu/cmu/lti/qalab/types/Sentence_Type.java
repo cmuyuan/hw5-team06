@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Mon May 13 14:41:33 EDT 2013
+ * Updated by JCasGen Sun Nov 10 19:51:30 EST 2013
  * @generated */
 public class Sentence_Type extends Annotation_Type {
   /** @generated */
@@ -187,6 +187,24 @@ public class Sentence_Type extends Annotation_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_nerList, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_interrogative;
+  /** @generated */
+  final int     casFeatCode_interrogative;
+  /** @generated */ 
+  public boolean getInterrogative(int addr) {
+        if (featOkTst && casFeat_interrogative == null)
+      jcas.throwFeatMissing("interrogative", "edu.cmu.lti.qalab.types.Sentence");
+    return ll_cas.ll_getBooleanValue(addr, casFeatCode_interrogative);
+  }
+  /** @generated */    
+  public void setInterrogative(int addr, boolean v) {
+        if (featOkTst && casFeat_interrogative == null)
+      jcas.throwFeatMissing("interrogative", "edu.cmu.lti.qalab.types.Sentence");
+    ll_cas.ll_setBooleanValue(addr, casFeatCode_interrogative, v);}
+    
+  
 
 
 
@@ -227,6 +245,10 @@ public class Sentence_Type extends Annotation_Type {
  
     casFeat_nerList = jcas.getRequiredFeatureDE(casType, "nerList", "uima.cas.FSList", featOkTst);
     casFeatCode_nerList  = (null == casFeat_nerList) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_nerList).getCode();
+
+ 
+    casFeat_interrogative = jcas.getRequiredFeatureDE(casType, "interrogative", "uima.cas.Boolean", featOkTst);
+    casFeatCode_interrogative  = (null == casFeat_interrogative) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_interrogative).getCode();
 
   }
 }
