@@ -41,6 +41,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 
 			Question question = qaSet.get(i).getQuestion();
 			System.out.println("Question: " + question.getText());
+			
 			ArrayList<Answer> choiceList = Utils.fromFSListToCollection(qaSet
 					.get(i).getAnswerList(), Answer.class);
 			ArrayList<CandidateSentence> candSentList = Utils
@@ -70,13 +71,16 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 							answer.getNerList(), NER.class);
 
 					int nnMatch = 0;
+					int nerMatch = 0;
 					for (int k = 0; k < candSentNouns.size(); k++) {
+						// If candidate Noun Phrase contains answer NER
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
-								nnMatch++;
+								nerMatch+=2;
 							}
 						}
+						// If candidate Noun phrase contains answer Nouns
 						for (int l = 0; l < choiceNouns.size(); l++) {
 							if (candSentNouns.get(k).getText()
 									.contains(choiceNouns.get(l).getText())) {
@@ -85,11 +89,12 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 						}
 					}
 
+					// Same as above, for NERs
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
-								nnMatch++;
+								nerMatch+=2;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
@@ -100,7 +105,8 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 						}
 
 					}
-
+					// Add scores of matches of Answer NER with NN 
+					nnMatch+=nerMatch;
 					System.out.println(choiceList.get(j).getText() + "\t"
 							+ nnMatch);
 					CandidateAnswer candAnswer = null;
