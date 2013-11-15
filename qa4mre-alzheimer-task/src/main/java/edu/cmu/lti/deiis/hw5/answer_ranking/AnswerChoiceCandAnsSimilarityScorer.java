@@ -49,15 +49,18 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 							CandidateSentence.class);
 
 			int topK = Math.min(K_CANDIDATES, candSentList.size());
+			
+			//Candidate answer scoring logic starts here
 			for (int c = 0; c < topK; c++) {
 
 				CandidateSentence candSent = candSentList.get(c);
 
 				ArrayList<NounPhrase> candSentNouns = Utils
 						.fromFSListToCollection(candSent.getSentence()
-								.getPhraseList(), NounPhrase.class);
+								.getPhraseList(), NounPhrase.class);//getNouns
 				ArrayList<NER> candSentNers = Utils.fromFSListToCollection(
 						candSent.getSentence().getNerList(), NER.class);
+				//get NamedEntities
 
 				ArrayList<CandidateAnswer> candAnsList = new ArrayList<CandidateAnswer>();
 				for (int j = 0; j < choiceList.size(); j++) {
@@ -117,6 +120,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					candAnswer.setQId(answer.getQuestionId());
 					candAnswer.setChoiceIndex(j);
 					candAnswer.setSimilarityScore(nnMatch);
+					//candAnswer.sets
 					candAnsList.add(candAnswer);
 				}
 
@@ -125,7 +129,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 				candSent.setCandAnswerList(fsCandAnsList);
 				candSentList.set(c, candSent);
 
-			}
+			}			//Candidate answer scoring logic ends here
 
 			System.out
 					.println("================================================");
