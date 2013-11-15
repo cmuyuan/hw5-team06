@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Nov 10 19:51:29 EST 2013
+ * Updated by JCasGen Fri Nov 15 17:28:42 EST 2013
  * @generated */
 public class QuestionAnswerSet_Type extends Annotation_Type {
   /** @generated */

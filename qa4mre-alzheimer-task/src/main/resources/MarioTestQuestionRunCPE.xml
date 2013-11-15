@@ -44,14 +44,7 @@
     <flowConstraints>
       <fixedFlow>
         <node>QuestionCategoryAnnotator</node>
-        <!-- <node>QuestionCandSentSynonymMatcher</node>-->
-        <!-- <node>QuestionCandSentDependencyMatcher</node>-->
-        <node>QuestionCandSentSimilarityMatcher</node>
-        <!-- <node>AnswerChoiceCandAnsSynonymScorer</node>-->
-        <!--<node>AnswerChoiceCandAnsPMIScorer</node>-->
-        <node>AnswerChoiceCandAnsSimilarityScorer</node>
-      <node>AnswerSelectionMario</node>
-      </fixedFlow>
+        </fixedFlow>
     </flowConstraints>
     <typePriorities/>
     <fsIndexCollection/>

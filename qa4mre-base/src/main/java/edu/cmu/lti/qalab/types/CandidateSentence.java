@@ -14,7 +14,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Nov 10 19:51:29 EST 2013
+ * Updated by JCasGen Fri Nov 15 17:28:41 EST 2013
  * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class CandidateSentence extends Annotation {

@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** 
- * Updated by JCasGen Sun Nov 10 19:51:30 EST 2013
+ * Updated by JCasGen Fri Nov 15 17:28:42 EST 2013
  * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class TestDocument extends SourceDocument {
