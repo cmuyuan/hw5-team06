@@ -1,5 +1,10 @@
 package edu.cmu.lti.deiis.hw5.utils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import edu.smu.tspell.wordnet.NounSynset;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.SynsetType;
@@ -13,8 +18,9 @@ public class WordNetAPI {
 
 
 	}
-public static void getHyponyms(String word)
-{
+public static Set<String>  getHyponyms(String word)
+{Set<String> set=new HashSet<String>();
+	List<String> hyponymList=new ArrayList<String>();
 	//wordnet-sense-index
 	NounSynset nounSynset; 
 	NounSynset[] hyponyms; 
@@ -24,16 +30,21 @@ public static void getHyponyms(String word)
 	for (int i = 0; i < synsets.length; i++) { 
 	    nounSynset = (NounSynset)(synsets[i]); 
 	    hyponyms = nounSynset.getHyponyms(); 
-	    System.err.println(nounSynset.getWordForms()[0] + 
-	            ": " + nounSynset.getDefinition() + ") has " + hyponyms.length + " hyponyms"); 
+	  //  System.err.println(nounSynset.getWordForms()[0] + 
+	    //        ": " + nounSynset.getDefinition() + ") has " + hyponyms.length + " hyponyms"); 
 	
-	
+	    nounSynset.getTopics();
 	for(int j=0;j<hyponyms.length;j++)
 	{NounSynset hpn = hyponyms[j];
-		//System.out.println("hypo+"+j+"is "+hpn.getTopics());
+	String hpnString=hpn.getWordForms()[0];
+	//NounSynset[] o = hpn.getTopics();
+	//System.out.println("hypo+"+j+"is "+hpn.getWordForms()[0]);
+	hyponymList.add(hpnString);
 	//	hpn.
+	set.add(hpnString);
 	}
 	}
+	return set;
 
 }
 
@@ -41,7 +52,11 @@ public static void getHyponyms(String word)
 
 
 public static void main(String args[])
-{getHyponyms("fly");
+{Set<String> hyponymList=getHyponyms("fly");
 	
+for(String hpm:hyponymList)
+{System.out.println(hpm);
+	
+}
 }
 }
