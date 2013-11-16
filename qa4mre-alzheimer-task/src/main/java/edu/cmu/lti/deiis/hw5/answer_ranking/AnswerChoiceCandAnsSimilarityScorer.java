@@ -40,8 +40,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 		for (int i = 0; i < qaSet.size(); i++) {
 
 			Question question = qaSet.get(i).getQuestion();
-			System.out.println("Question: " + question.getText());
-			
+			System.out.println("Question: " + question.getText());	
 			ArrayList<Answer> choiceList = Utils.fromFSListToCollection(qaSet
 					.get(i).getAnswerList(), Answer.class);
 			ArrayList<CandidateSentence> candSentList = Utils
@@ -92,13 +91,13 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					// Same as above, for NERs
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
-							if (candSentNouns.get(k).getText()
+							if (candSentNers.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
 								nerMatch++;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
-							if (candSentNouns.get(k).getText()
+							if (candSentNers.get(k).getText()
 									.contains(choiceNouns.get(l).getText())) {
 								nnMatch++;
 							}

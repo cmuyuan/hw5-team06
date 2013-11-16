@@ -63,7 +63,6 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			Question question=qaSet.get(i).getQuestion();
 			System.out.println("========================================================");
 			System.out.println("Question: "+question.getText());
-			
 			String searchQuery=this.formSolrQuery(question);
 			if(searchQuery.trim().equals("")){
 				continue;
@@ -74,7 +73,6 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			solrQuery.add("q",searchQuery);
 			solrQuery.add("rows",String.valueOf(TOP_SEARCH_RESULTS));
 			solrQuery.setFields("*", "score");
-			
 			try {
 				SolrDocumentList results=solrWrapper.runQuery(solrQuery, TOP_SEARCH_RESULTS);
 				for(int j=0;j<results.size();j++){
@@ -85,7 +83,6 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 						continue;
 					}
 					String sentIdx=sentId.replace(docId,"").replace("_", "").trim();
-					
 					int idx=Integer.parseInt(sentIdx);
 					Sentence annSentence=sentenceList.get(idx);
 					
@@ -96,7 +93,7 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 					candSent.setSentence(annSentence);
 					candSent.setRelevanceScore(relScore);
 					candidateSentList.add(candSent);
-					System.out.println(relScore+"\t"+sentence+"\n");
+					System.out.println(relScore+"\t"+sentence);
 				}
 				FSList fsCandidateSentList=Utils.fromCollectionToFSList(aJCas, candidateSentList);
 				fsCandidateSentList.addToIndexes();
@@ -123,12 +120,6 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 		
 		for(int i=0;i<nounPhrases.size();i++){
 			solrQuery+="nounphrases:\""+nounPhrases.get(i).getText()+"\" ";		
-			/*NounPhrase np = nounPhrases.get(i);
-			FSList x = np.getSynonyms();
-			ArrayList<Synonym> synonymList = Utils.fromFSListToCollection(np.getSynonyms(),Synonym.class);
-			for (Synonym syn : synonymList ){
-				System.out.println(syn.getText());
-			}*/
 		}
 		
 		ArrayList<NER>neList=Utils.fromFSListToCollection(question.getNerList(), NER.class);
@@ -136,7 +127,6 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			solrQuery+="namedentities:\""+neList.get(i).getText()+"\" ";
 		}
 		solrQuery=solrQuery.trim();
-		System.out.println(solrQuery);
 		
 		return solrQuery;
 	}

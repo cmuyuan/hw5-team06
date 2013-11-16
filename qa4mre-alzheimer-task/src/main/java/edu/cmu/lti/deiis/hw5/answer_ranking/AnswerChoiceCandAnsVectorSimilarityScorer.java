@@ -35,7 +35,8 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 		K_CANDIDATES = (Integer) context
 				.getConfigParameterValue("K_CANDIDATES");
 		vectorModel = new DistributionalSimilarity();
-		String filename = "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
+		//String filename = "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
+		String filename = "model\\alzheimer.tok.model.320";
 		try {
 			vectorModel.readModel(filename);
 		} catch (IOException e) {
