@@ -14,6 +14,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.TestDocument;
+import edu.cmu.lti.qalab.types.Dependency;
+import edu.cmu.lti.qalab.types.NounPhrase;
+import edu.cmu.lti.qalab.types.Token;
 import edu.cmu.lti.qalab.utils.Utils;
 
 public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
@@ -37,12 +40,23 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			
 			Question question=questionList.get(i);
 			
-			//check for question words (i.e. wh-words, how many, how much, etc.)
+			//get dependencies and noun phrases and convert to ArrayList
+			FSList depFSList = question.getDependencies();
+      ArrayList<Dependency> depList = new ArrayList<Dependency>();
+      depList = Utils.fromFSListToCollection(depFSList,Dependency.class);
+      
+      FSList nounFSList = question.getNounList();
+      ArrayList<NounPhrase> nounList = new ArrayList<NounPhrase>();
+      nounList = Utils.fromFSListToCollection(depFSList,NounPhrase.class);
+      if (nounList.size()<1){System.out.println("Why is this empty?");}
+			
+      //get question text
 			String qText = question.getText();
 			
 			//order who, what, when, where, why, how, which, how many, how much
 			ArrayList<Boolean> whWords = new ArrayList<Boolean>();
-			
+		  
+			//create regex matchers for different wh-words
       Matcher whoMatch = Pattern.compile("[Ww]ho").matcher(qText);
       Matcher whatMatch = Pattern.compile("[Ww]hat").matcher(qText);
       Matcher whenMatch = Pattern.compile("[Ww]hen").matcher(qText);
@@ -53,6 +67,7 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
       Matcher howmanyMatch = Pattern.compile("[Hh]ow many").matcher(qText);
       Matcher howmuchMatch = Pattern.compile("[Hh]ow much").matcher(qText);
       
+    //check for question words (i.e. wh-words, how many, how much, etc.)
       whWords.add(whoMatch.find());
       whWords.add(whatMatch.find());
       whWords.add(whenMatch.find());
@@ -80,7 +95,6 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
         else if (whWords.get(8)){question.setCategory("howmuch");}
         else {question.setCategory("other");}
       } else {question.setCategory("conflict");}
-      
       //resolve category conflict for questions with multiple wh-words
       //determine if one is merely introducing a subordinate clause
       //check if numMatch != 1 then do stuff
@@ -88,14 +102,45 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			//question.addToIndexes();
 			questionList.set(i, question);
 			
-			System.out.println("Question " + (i+1) + ": " + question.getText());
+			/*System.out.println("Question " + (i+1) + ": " + question.getText());
 			System.out.print("Category: " + question.getCategory());
 			if (numMatch>1) {
 			  System.out.println("\t\t   who    what  when   where   why    how    which howmany howmuch");
 	      System.out.println("\t\t\t" + numMatch + " " + whWords);  
-			}
-			System.out.println();
-			//if (whWords.get(6)){System.out.println(question.getDependencies());}
+			} else {System.out.println();}
+			System.out.println();*/
+			if (question.getCategory()=="which"){
+			  System.out.println("Question " + (i+1) + ": " + question.getText());
+			  
+			  int whPos = whichMatch.start();
+			  int minDist = qText.length();
+			  for(int j=0;j<nounList.size();j++){
+			    NounPhrase np = nounList.get(j);
+			    System.out.println(np);
+			    Matcher npMatch = Pattern.compile(np.getText()).matcher(qText);
+			    if (npMatch.find(whPos)){
+			      int nounPos = npMatch.start();
+			      int dist = nounPos - whPos;
+	          if (dist <=  minDist){
+	            minDist = dist;
+	            question.setAskingFor(np.getText());
+	          }
+			    }
+			  }
+			  
+			  for(int j=0;j<depList.size();j++){
+			    Dependency depRel = depList.get(j);
+			    Token dep = depRel.getDependent();
+			    Token gov = depRel.getGovernor();
+			    if (dep.getText().equalsIgnoreCase("which")){
+			      if (question.getAskingFor() == null && gov.getPos().startsWith("NN")){
+			        question.setAskingFor(gov.getText());
+			      }
+			    }
+			  }
+			  System.out.println("Category: " + question.getCategory() + " \t" + "Asking for " + question.getAskingFor());
+			  System.out.println();
+			  }
 		}
 		
 		//FSList fsQuestionList=Utils.createQuestionList(aJCas, questionList);

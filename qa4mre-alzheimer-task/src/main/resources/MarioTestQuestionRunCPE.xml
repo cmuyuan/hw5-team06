@@ -33,6 +33,9 @@
     <delegateAnalysisEngine key="AnswerSelectionMario">
       <import name="annotators.AnswerSelectionMario"/>
     </delegateAnalysisEngine>
+  <delegateAnalysisEngine key="QuestionPhraseAnnotator">
+      <import name="annotators.QuestionPhraseAnnotator"/>
+    </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
     <name>CpeQuestionDescriptor</name>
@@ -43,8 +46,9 @@
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
+        <node>QuestionPhraseAnnotator</node>
         <node>QuestionCategoryAnnotator</node>
-        </fixedFlow>
+      </fixedFlow>
     </flowConstraints>
     <typePriorities/>
     <fsIndexCollection/>
