@@ -60,12 +60,19 @@ public class SetUtil {
 	}
 
 
+	public static void addStringArray(Set<String> set, String[] array)
+	{
+		
+		for(String string:array)
+		{
+			set.add(string);
+			
+		}
+		
+		
+		
 
-
-
-
-
-
+	}
 
 
 

@@ -1,6 +1,7 @@
 package edu.cmu.lti.deiis.hw5.answer_ranking;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -9,6 +10,8 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import edu.cmu.lti.deiis.hw5.utils.SetUtil;
+import edu.cmu.lti.deiis.hw5.utils.WordNetAPI;
 import edu.cmu.lti.qalab.types.Answer;
 import edu.cmu.lti.qalab.types.CandidateAnswer;
 import edu.cmu.lti.qalab.types.CandidateSentence;
@@ -44,6 +47,7 @@ public class AnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
 			System.out.println("Question: " + question.getText());
 			ArrayList<Answer> choiceList = Utils.fromFSListToCollection(qaSet
 					.get(i).getAnswerList(), Answer.class);
+			
 			ArrayList<CandidateSentence> candSentList = Utils
 					.fromFSListToCollection(qaSet.get(i)
 							.getCandidateSentenceList(),
@@ -67,14 +71,16 @@ public class AnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
 				for (int j = 0; j < choiceList.size(); j++) {
 
 					Answer answer = choiceList.get(j);
-					ArrayList<NounPhrase> choiceTokens = Utils
-							.fromFSListToCollection(answer.getNounPhraseList(),
-									NounPhrase.class);
+					ArrayList<Token> choiceTokens = Utils
+							.fromFSListToCollection(answer.getTokenList(),
+									Token.class);
 		//			ArrayList<NER> choiceNERs = Utils.fromFSListToCollection(
 			//				answer.getNerList(), NER.class);
 
 					int synMatch = 0;
 					for (int k = 0; k < candSentTokens.size(); k++) {
+						String canTokenString=candSentTokens.get(k).getText();
+						Set<String> canTokenSyn=WordNetAPI.getHyponyms(canTokenString, null);
 						/*for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentSynonyms.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
@@ -82,29 +88,17 @@ public class AnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
 							}
 						}*/
 						for (int l = 0; l < choiceTokens.size(); l++) {
-							if (candSentTokens.get(k).getText()
-									.contains(choiceTokens.get(l).getText())) {
-								synMatch++;
+							
+							String choiceTokenString=choiceTokens.get(l).getText();
+							Set<String> choiceTokenSyn=WordNetAPI.getHyponyms(choiceTokenString, null);
+
+							if (SetUtil.calculauteIntersection(canTokenSyn, choiceTokenSyn)) {
+							synMatch++;
 							}
 						}
 					}
 
-				/*	for (int k = 0; k < candSentNers.size(); k++) {
-						for (int l = 0; l < choiceNERs.size(); l++) {
-							if (candSentSynonyms.get(k).getText()
-									.contains(choiceNERs.get(l).getText())) {
-								nnMatch++;
-							}
-						}
-						for (int l = 0; l < choiceNouns.size(); l++) {
-							if (candSentSynonyms.get(k).getText()
-									.contains(choiceNouns.get(l).getText())) {
-								nnMatch++;
-							}
-						}
 
-					}
-*/
 					System.out.println(choiceList.get(j).getText() + "\t"
 							+ synMatch);
 					CandidateAnswer candAnswer = null;
