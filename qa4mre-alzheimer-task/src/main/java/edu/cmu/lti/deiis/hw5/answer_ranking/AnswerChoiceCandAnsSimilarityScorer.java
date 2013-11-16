@@ -77,7 +77,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
-								nerMatch+=2;
+								nerMatch++;
 							}
 						}
 						// If candidate Noun phrase contains answer Nouns
@@ -94,7 +94,7 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
 									.contains(choiceNERs.get(l).getText())) {
-								nerMatch+=2;
+								nerMatch++;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {

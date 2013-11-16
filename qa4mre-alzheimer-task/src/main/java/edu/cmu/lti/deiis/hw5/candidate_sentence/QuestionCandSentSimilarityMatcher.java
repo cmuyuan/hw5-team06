@@ -74,6 +74,7 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 			solrQuery.add("q",searchQuery);
 			solrQuery.add("rows",String.valueOf(TOP_SEARCH_RESULTS));
 			solrQuery.setFields("*", "score");
+			
 			try {
 				SolrDocumentList results=solrWrapper.runQuery(solrQuery, TOP_SEARCH_RESULTS);
 				for(int j=0;j<results.size();j++){
@@ -84,16 +85,18 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 						continue;
 					}
 					String sentIdx=sentId.replace(docId,"").replace("_", "").trim();
+					
 					int idx=Integer.parseInt(sentIdx);
 					Sentence annSentence=sentenceList.get(idx);
 					
 					String sentence=doc.get("text").toString();
+					
 					double relScore=Double.parseDouble(doc.get("score").toString());
 					CandidateSentence candSent=new CandidateSentence(aJCas);
 					candSent.setSentence(annSentence);
 					candSent.setRelevanceScore(relScore);
 					candidateSentList.add(candSent);
-					System.out.println(relScore+"\t"+sentence);
+					System.out.println(relScore+"\t"+sentence+"\n");
 				}
 				FSList fsCandidateSentList=Utils.fromCollectionToFSList(aJCas, candidateSentList);
 				fsCandidateSentList.addToIndexes();

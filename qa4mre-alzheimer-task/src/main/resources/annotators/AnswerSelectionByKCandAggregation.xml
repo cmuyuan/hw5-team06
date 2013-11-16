@@ -22,7 +22,7 @@
       <nameValuePair>
         <name>K_CANDIDATES</name>
         <value>
-          <integer>10</integer>
+          <integer>5</integer>
         </value>
       </nameValuePair>     
     </configurationParameterSettings>

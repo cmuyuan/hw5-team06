@@ -56,14 +56,14 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
           correct = answer.getText();
           break;
         }
-      }
+      }	
 
       HashMap<String, Double> hshAnswer = new HashMap<String, Double>();
 
       for (int c = 0; c < topK; c++) {
 
         CandidateSentence candSent = candSentList.get(c);
-
+        //System.out.println(candSent.getSentence().getText());
         ArrayList<CandidateAnswer> candAnswerList = Utils.fromFSListToCollection(
                 candSent.getCandAnswerList(), CandidateAnswer.class);
         String selectedAnswer = "";
@@ -85,7 +85,7 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
         if (existingVal == null) {
           existingVal = new Double(0.0);
         }
-        hshAnswer.put(selectedAnswer, existingVal + 1.0);
+        hshAnswer.put(selectedAnswer, existingVal + 1);
       }
 
       String bestChoice = null;

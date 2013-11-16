@@ -63,11 +63,10 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 			}
 
 			HashMap<String, Double> hshAnswer = new HashMap<String, Double>();
-
+					
 			for (int c = 0; c < topK; c++) {
 
 				CandidateSentence candSent = candSentList.get(c);
-
 				ArrayList<CandidateAnswer> candAnswerList = Utils
 						.fromFSListToCollection(candSent.getCandAnswerList(),
 								CandidateAnswer.class);
