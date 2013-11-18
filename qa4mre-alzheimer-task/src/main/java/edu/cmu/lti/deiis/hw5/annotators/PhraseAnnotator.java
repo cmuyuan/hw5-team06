@@ -53,22 +53,28 @@ public class PhraseAnnotator extends JCasAnnotator_ImplBase{
 		
 		ArrayList<NounPhrase>nounPhraseList=new ArrayList<NounPhrase>();
 		String nounPhrase="";
+		Boolean nounFlag = false;
 		for(int i=0;i<tokenList.size();i++){
 			Token token=tokenList.get(i);
 			String word=token.getText();
 			String pos=token.getPos();
 			
-			if(pos.startsWith("NN") || pos.startsWith("JJ") || pos.startsWith("CD")){
-				nounPhrase+=word+" ";
-			}else{
-				nounPhrase=nounPhrase.trim();
-				if(!nounPhrase.equals("")){
-					NounPhrase nn=new NounPhrase(jCas);
-					nn.setText(nounPhrase);
-					nounPhraseList.add(nn);
-					//System.out.println("Noun Phrase: "+nounPhrase);
-					nounPhrase="";
-				}
+			if(pos.startsWith("NN")){
+        nounPhrase+=word+" ";
+        nounFlag = true;
+      }else if (pos.startsWith("JJ") || pos.startsWith("CD")){
+        nounPhrase+=word+" ";
+      }else{
+        nounPhrase=nounPhrase.trim();
+        if(!nounPhrase.equals("") && nounFlag){
+          NounPhrase nn=new NounPhrase(jCas);
+          nounPhrase=nounPhrase.trim();
+          nn.setText(nounPhrase);
+          nounPhraseList.add(nn);
+          //System.out.println("Noun Phrase: "+nounPhrase);
+          nounPhrase="";
+          nounFlag = false;
+        } else if (!nounFlag) {nounPhrase="";}
 			}
 			
 			
