@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.cmu.lti.deiis.hw5.runner.SimpleQuestionRunCPE;
-
 public class DistributionalSimilarity {
 
 	public Map<String, double[]> wordVectorMap;
@@ -42,7 +40,7 @@ public class DistributionalSimilarity {
 				word = vectorStr[0];
 				double[] wVector = new double[vectorSize];
 				int i;
-				for ( i = 1; i < vectorStr.length; i++) {
+				for (i = 1; i < vectorStr.length; i++) {
 					wVector[i - 1] = Double.parseDouble(vectorStr[i]);
 				}
 				normalize(wVector);
@@ -55,7 +53,9 @@ public class DistributionalSimilarity {
 			e.printStackTrace();
 		}
 		System.out.println("Read " + count + " words");
-		//testModel("amino acid");
+		
+
+		// testModel("amino acid");
 	}
 
 	// Vector Normalization
@@ -69,16 +69,16 @@ public class DistributionalSimilarity {
 
 	}
 
-	public double [] getSentenceVector(String query){
-		
+	public double[] getSentenceVector(String query) {
+
 		double[] queryVector = new double[vectorSize];
 		String queryArray[] = query.split(" ");
 		int a;
-		int count=0;
+		int count = 0;
 		for (String word : queryArray) {
-			
+
 			if (!wordVectorMap.containsKey(word)) {
-				//System.out.println("Word " + word + " not in vocabulary\n");
+				// System.out.println("Word " + word + " not in vocabulary\n");
 				continue;
 			}
 			count++;
@@ -86,19 +86,24 @@ public class DistributionalSimilarity {
 			for (a = 0; a < vectorSize; a++)
 				queryVector[a] += wordVector[a];
 		}
-		if (count >0){
+		if (count > 0) {
 			normalize(queryVector);
-		}
-		return queryVector;
 		
+		}
+		//else
+		//	queryVector[0]=-100;
+		return queryVector;
 	}
-	public double getDistance(String word1, String word2){
-	
-		double [] word1Vector = getSentenceVector(word1);
-		double [] word2Vector = getSentenceVector(word2);
+
+	public double getDistance(String word1, String word2) {
+
+		double[] word1Vector = getSentenceVector(word1);
+		double[] word2Vector = getSentenceVector(word2);
+		if (word1Vector[0]==-100 || word2Vector[0]==-100)
+			return -1;
 		return getDistance(word1Vector, word2Vector);
 	}
-	
+
 	public double getDistance(double[] w1Vector, double[] w2Vector) {
 		double score = 0.0;
 		for (int a = 0; a < vectorSize; a++)
@@ -107,22 +112,21 @@ public class DistributionalSimilarity {
 
 	}
 
-	
 	public void testModel(String query) {
 
 		String queryArray[] = query.split(" ");
-		
+
 		int a;
-		double[] queryVector; 
+		double[] queryVector;
 		queryVector = getSentenceVector(query);
-		
+
 		int topN = 20;
 		String[] bestw = new String[topN];
 		double[] bestd = new double[topN];
 
 		for (a = 0; a < topN; a++)
 			bestw[a] = "";
-		
+
 		for (String word : vocab) {
 			int check = 1;
 
@@ -155,7 +159,6 @@ public class DistributionalSimilarity {
 		for (a = 0; a < topN; a++)
 			System.out.println(bestw[a] + "\t" + bestd[a]);
 	}
-	
 
 	public static void main(String[] args) throws Exception {
 		DistributionalSimilarity DS = new DistributionalSimilarity();

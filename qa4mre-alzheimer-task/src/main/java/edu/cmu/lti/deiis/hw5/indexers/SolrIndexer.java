@@ -21,6 +21,7 @@ import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Sentence;
 import edu.cmu.lti.qalab.types.Synonym;
 import edu.cmu.lti.qalab.types.TestDocument;
+import edu.cmu.lti.qalab.types.VerbPhrase;
 import edu.cmu.lti.qalab.utils.Utils;
 
 public class SolrIndexer extends JCasAnnotator_ImplBase {
@@ -92,6 +93,22 @@ public class SolrIndexer extends JCasAnnotator_ImplBase {
 
 				indexMap.put("nounphrases", nnList);
 
+				//Verb Phrase indexing
+				FSList fsVerbList = sent.getVerbPhraseList();
+				ArrayList<VerbPhrase> verbPhrases = Utils
+						.fromFSListToCollection(fsVerbList, VerbPhrase.class);
+				ArrayList<String> vbList = new ArrayList<String>();
+				for (int j = 0; j < verbPhrases.size(); j++) {
+					//NounPhrase nnPhr=nounPhrases.get(j);
+					vbList.add(verbPhrases.get(j).getText());
+					/*ArrayList<Synonym>synList=Utils.fromFSListToCollection(nnPhr.getSynonyms(),Synonym.class);
+					for(int k=0;k<synList.size();k++){
+						synonymList.add(synList.get(k).getText());
+					}*/
+				}
+
+				indexMap.put("verbphrases", vbList);
+				
 				FSList fsNEList = sent.getNerList();
 				ArrayList<NER> namedEntities = Utils.fromFSListToCollection(
 						fsNEList, NER.class);

@@ -3,6 +3,7 @@ package edu.cmu.lti.deiis.hw5.answer_ranking;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -18,9 +19,11 @@ import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.TestDocument;
+import edu.cmu.lti.qalab.types.VerbPhrase;
 import edu.cmu.lti.qalab.utils.Utils;
 
 import edu.cmu.lti.deiis.hw5.utils.DistributionalSimilarity;
+
 
 public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 		JCasAnnotator_ImplBase {
@@ -35,10 +38,11 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 		K_CANDIDATES = (Integer) context
 				.getConfigParameterValue("K_CANDIDATES");
 		vectorModel = new DistributionalSimilarity();
-		//String filename = "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
+		// String filename =
+		// "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
 		String filename = "model\\alzheimer.tok.model.320";
 		try {
-			vectorModel.readModel(filename);
+			vectorModel.readModel(filename);			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +51,6 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 	@Override
 	public void process(JCas aJCas) throws AnalysisEngineProcessException {
 		TestDocument testDoc = Utils.getTestDocumentFromCAS(aJCas);
-		// String testDocId = testDoc.getId();
 		ArrayList<QuestionAnswerSet> qaSet = Utils
 				.getQuestionAnswerSetFromTestDocCAS(aJCas);
 
@@ -72,7 +75,23 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 								.getPhraseList(), NounPhrase.class);
 				ArrayList<NER> candSentNers = Utils.fromFSListToCollection(
 						candSent.getSentence().getNerList(), NER.class);
-
+				ArrayList<VerbPhrase> candSentVerbs = Utils
+						.fromFSListToCollection(candSent.getSentence()
+								.getPhraseList(), VerbPhrase.class);
+				// For matching complete NN and NER 
+				StringBuilder candSentNounString = new StringBuilder();
+				for (int k = 0; k < candSentNouns.size(); k++) {
+					candSentNounString.append(candSentNouns.get(k).getText());
+					candSentNounString.append(" ");
+				}
+				
+				StringBuilder candSentNerString = new StringBuilder();
+				for (int k = 0; k < candSentNers.size(); k++) {
+					candSentNerString.append(candSentNers.get(k).getText());
+					candSentNerString.append(" ");
+				}
+				
+				
 				ArrayList<CandidateAnswer> candAnsList = new ArrayList<CandidateAnswer>();
 				for (int j = 0; j < choiceList.size(); j++) {
 
@@ -80,11 +99,33 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 					ArrayList<NounPhrase> choiceNouns = Utils
 							.fromFSListToCollection(answer.getNounPhraseList(),
 									NounPhrase.class);
+					ArrayList<VerbPhrase> choiceVerbs = Utils
+							.fromFSListToCollection(answer.getVerbPhraseList(),
+									VerbPhrase.class);
+					
 					ArrayList<NER> choiceNERs = Utils.fromFSListToCollection(
 							answer.getNerList(), NER.class);
 
 					double similarityScore = 0.0;
-
+				
+					// Combining all NN and NER into 1
+					/*
+					StringBuilder choiceNounString = new StringBuilder();
+					for (int k = 0; k < choiceNouns.size(); k++) {
+						choiceNounString.append(choiceNouns.get(k).getText());
+						choiceNounString.append(" ");
+					}
+					
+					StringBuilder choiceNerString = new StringBuilder();
+					for (int k = 0; k < choiceNERs.size(); k++) {
+						choiceNerString.append(choiceNERs.get(k).getText());
+						choiceNerString.append(" ");
+					}
+					similarityScore += vectorModel.getDistance(candSentNounString.toString(), choiceNounString.toString());
+					similarityScore += vectorModel.getDistance(candSentNerString.toString(), choiceNerString.toString());
+					*/
+					// Standard way of scoring NER and NNs
+					
 					for (int k = 0; k < candSentNouns.size(); k++) {
 						// If candidate Noun Phrase contains answer NER
 						for (int l = 0; l < choiceNERs.size(); l++) {
@@ -102,7 +143,18 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 						}
 
 					}
+				
+					//For verb phrase
+					for (int k = 0; k < candSentVerbs.size(); k++) {
+						// If candidate Noun Phrase contains answer NER
+						for (int l = 0; l < choiceVerbs.size(); l++) {
+							similarityScore += vectorModel.getDistance(
+									candSentVerbs.get(k).getText(), choiceVerbs
+											.get(l).getText());
+						}
+					}
 
+					
 					// Same as above, for NERs
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
@@ -116,10 +168,9 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 									candSentNers.get(k).getText(), choiceNouns
 											.get(l).getText());
 						}
-
 					}
-					// Add scores of matches of Answer NER with NN
-
+					
+				
 					System.out.println(choiceList.get(j).getText() + "\t"
 							+ similarityScore);
 					CandidateAnswer candAnswer = null;
@@ -135,7 +186,7 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 					candAnswer.setText(answer.getText());
 					candAnswer.setQId(answer.getQuestionId());
 					candAnswer.setChoiceIndex(j);
-					candAnswer.setSimilarityScore(similarityScore);
+					candAnswer.setVectorSimilarityScore(similarityScore);
 					candAnsList.add(candAnswer);
 				}
 

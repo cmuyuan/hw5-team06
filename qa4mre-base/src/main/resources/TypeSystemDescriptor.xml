@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <name>typeSystemDescriptor</name>
   <description/>
   <version>1.0</version>
@@ -47,6 +48,13 @@
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.qalab.types.NounPhrase</elementType>
         </featureDescription>
+        <featureDescription>
+          <name>verbPhraseList</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.qalab.types.VerbPhrase</elementType>
+        </featureDescription>
+        
         <featureDescription>
           <name>nerList</name>
           <description/>
@@ -106,6 +114,30 @@
         </featureDescription>
       </features>
     </typeDescription>
+     <typeDescription>
+      <name>edu.cmu.lti.qalab.types.VerbPhrase</name>
+      <description/>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>text</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>weight</name>
+          <description/>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>synonyms</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.qalab.types.Synonym</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+   
     <typeDescription>
       <name>edu.cmu.lti.qalab.types.NER</name>
       <description/>
@@ -231,6 +263,12 @@
           <elementType>edu.cmu.lti.qalab.types.NounPhrase</elementType>
         </featureDescription>
         <featureDescription>
+          <name>verbPhraseList</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.qalab.types.VerbPhrase</elementType>
+        </featureDescription>
+        <featureDescription>
           <name>nerList</name>
           <description/>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
@@ -282,6 +320,12 @@
           <description/>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.qalab.types.NounPhrase</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>verbList</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.qalab.types.VerbPhrase</elementType>
         </featureDescription>
         <featureDescription>
           <name>tokenList</name>
@@ -425,6 +469,11 @@
         </featureDescription>
         <featureDescription>
           <name>synonymScore</name>
+          <description/>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription>
+      <featureDescription>
+          <name>vectorSimilarityScore</name>
           <description/>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>

@@ -13,7 +13,6 @@ import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.util.XMLInputSource;
 
-import edu.cmu.lti.deiis.hw5.utils.DistributionalSimilarity;
 
 /**
  * Main Class that runs a Collection Processing Engine (CPE). This class reads a

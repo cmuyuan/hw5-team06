@@ -41,7 +41,6 @@ public class AnswerChoiceCandAnsPMIScorer extends JCasAnnotator_ImplBase {
 		
 		try {
 			this.solrWrapper = new SolrWrapper(serverUrl);
-			// loadStopWords(stopFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,7 +56,6 @@ public class AnswerChoiceCandAnsPMIScorer extends JCasAnnotator_ImplBase {
 				.getQuestionAnswerSetFromTestDocCAS(aJCas);
 
 		for (int i = 0; i < qaSet.size(); i++) {
-
 			Question question = qaSet.get(i).getQuestion();
 			System.out.println("Question: " + question.getText());
 			ArrayList<Answer> choiceList = Utils.fromFSListToCollection(qaSet
