@@ -106,9 +106,7 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 					//System.out.println("Noun Phrase: "+nounPhrase);
 					nounPhrase="";
 					nounFlag = false;
-				} else if (!nounFlag) {
-				  nounPhrase="";
-				}
+				} else if (!nounFlag) {nounPhrase="";}
 			}
 					
 		}
