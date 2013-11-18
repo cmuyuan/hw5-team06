@@ -67,7 +67,7 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
         ArrayList<CandidateAnswer> candAnswerList = Utils.fromFSListToCollection(
                 candSent.getCandAnswerList(), CandidateAnswer.class);
         String selectedAnswer = "";
-        double maxScore = Double.NEGATIVE_INFINITY;
+        double maxScore = 0;//Double.NEGATIVE_INFINITY;
         for (int j = 0; j < candAnswerList.size(); j++) {
 
           CandidateAnswer candAns = candAnswerList.get(j);
@@ -75,17 +75,19 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
 
           double totalScore = candAns.getSimilarityScore() + candAns.getSynonymScore()
                   + candAns.getPMIScore();
-
+        //System.out.println(candAns.getSimilarityScore()+ " "+ candAns.getSynonymScore()+" " + candAns.getPMIScore());  
           if (totalScore > maxScore) {
             maxScore = totalScore;
             selectedAnswer = answer;
           }
         }
-        Double existingVal = hshAnswer.get(selectedAnswer);
-        if (existingVal == null) {
-          existingVal = new Double(0.0);
+        if(selectedAnswer!=""){
+          Double existingVal = hshAnswer.get(selectedAnswer);
+          if (existingVal == null) {
+            existingVal = new Double(0.0);
+          }
+          hshAnswer.put(selectedAnswer, existingVal + 1.0);
         }
-        hshAnswer.put(selectedAnswer, existingVal + 1.0);
       }
 
       String bestChoice = null;
@@ -95,6 +97,7 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
       } catch (Exception e) {
         e.printStackTrace();
       }
+      
       System.out.println("Correct Choice: " + "\t" + correct);
       System.out.println("Best Choice: " + "\t" + bestChoice);
 
@@ -129,7 +132,7 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
     while (it.hasNext()) {
       String key = it.next();
       Double val = hshAnswer.get(key);
-      System.out.println(key + "\t" + key + "\t" + val);
+      System.out.println(key + "\t" + val);
       if (val > maxScore) {
         maxScore = val;
         bestAns = key;

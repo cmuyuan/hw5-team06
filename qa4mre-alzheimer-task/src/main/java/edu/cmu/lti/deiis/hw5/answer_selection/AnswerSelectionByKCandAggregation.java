@@ -17,6 +17,7 @@ import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.TestDocument;
 import edu.cmu.lti.qalab.utils.Utils;
+import edu.stanford.nlp.io.EncodingPrintWriter.out;
 
 public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 
@@ -50,7 +51,9 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 					.fromFSListToCollection(qaSet.get(i)
 							.getCandidateSentenceList(),
 							CandidateSentence.class);
-
+			
+			int candSentNum=candSentList.size();
+			
 			int topK = Math.min(K_CANDIDATES, candSentList.size());
 			String correct = "";
 
@@ -67,11 +70,9 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 			for (int c = 0; c < topK; c++) {
 
 				CandidateSentence candSent = candSentList.get(c);
-
 				ArrayList<CandidateAnswer> candAnswerList = Utils
 						.fromFSListToCollection(candSent.getCandAnswerList(),
 								CandidateAnswer.class);
-
 				for (int j = 0; j < candAnswerList.size(); j++) {
 
 					CandidateAnswer candAns = candAnswerList.get(j);
@@ -83,9 +84,22 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 					if(existingVal==null){
 						existingVal=new Double(0.0);
 					}
-					hshAnswer.put(answer, existingVal+totalScore);
+					if(candSentNum==0){
+					hshAnswer.put(answer, existingVal+0);
+					}else{
+					  hshAnswer.put(answer, existingVal+totalScore/candSentNum);
+					}
 					
 				}
+			}
+			
+			for(int c=0;c<choiceList.size();c++){
+			  String answer=choiceList.get(c).getText();
+			  Double existingVal=hshAnswer.get(answer);
+        if(existingVal==null){
+          existingVal=new Double(0.0);
+        }
+        hshAnswer.put(answer, existingVal+choiceList.get(c).getAnswerScore());
 			}
 
 			String bestChoice = null;

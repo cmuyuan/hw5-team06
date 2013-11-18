@@ -73,13 +73,19 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					for (int k = 0; k < candSentNouns.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNERs.get(l).getText())) {
+									.contains(choiceNERs.get(l).getText())
+									||
+									choiceNERs.get(l).getText()
+                  .contains(candSentNouns.get(k).getText())) {
 								nnMatch++;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNouns.get(l).getText())) {
+									.contains(choiceNouns.get(l).getText())
+									||
+									choiceNouns.get(l).getText()
+                  .contains(candSentNouns.get(k).getText())) {
 								nnMatch++;
 							}
 						}
@@ -88,13 +94,19 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNERs.get(l).getText())) {
+									.contains(choiceNERs.get(l).getText())
+									||
+									choiceNERs.get(l).getText()
+                  .contains(candSentNouns.get(k).getText())) {
 								nnMatch++;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNouns.get(l).getText())) {
+									.contains(choiceNouns.get(l).getText())
+									||
+									choiceNouns.get(l).getText()
+                  .contains(candSentNouns.get(k).getText())) {
 								nnMatch++;
 							}
 						}
