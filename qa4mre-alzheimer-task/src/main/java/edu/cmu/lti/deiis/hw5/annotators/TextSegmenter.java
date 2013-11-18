@@ -17,6 +17,7 @@ import edu.cmu.lti.qalab.utils.Utils;
 public class TextSegmenter extends JCasAnnotator_ImplBase {
 
 	
+	
 	@Override
 	public void process(JCas jCas) throws AnalysisEngineProcessException {
 		// TODO Auto-generated method stub
