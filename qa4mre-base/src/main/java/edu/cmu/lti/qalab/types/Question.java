@@ -12,7 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Nov 18 17:20:02 EST 2013
+ * Updated by JCasGen Mon Nov 18 17:28:58 EST 2013
  * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class Question extends Annotation {
@@ -187,6 +187,44 @@ public class Question extends Annotation {
     if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_tokenList == null)
       jcasType.jcas.throwFeatMissing("tokenList", "edu.cmu.lti.qalab.types.Question");
     jcasType.ll_cas.ll_setRefValue(addr, ((Question_Type)jcasType).casFeatCode_tokenList, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: category
+
+  /** getter for category - gets What kind of question is this? Who, what, where, when, why or which answer is a true statement, etc.
+Different categories of questions require different answers (proper noun, common noun, verb phrase, etc.)
+   * @generated */
+  public String getCategory() {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Question");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_category);}
+    
+  /** setter for category - sets What kind of question is this? Who, what, where, when, why or which answer is a true statement, etc.
+Different categories of questions require different answers (proper noun, common noun, verb phrase, etc.) 
+   * @generated */
+  public void setCategory(String v) {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Question");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Question_Type)jcasType).casFeatCode_category, v);}    
+   
+    
+  //*--------------*
+  //* Feature: askingFor
+
+  /** getter for askingFor - gets If the question is the appropriate type, what should the answer be? I.e. if it asks "Which amino acid does X?" this feature should be "amino acid" since the answer must be a type of amino acid.
+   * @generated */
+  public String getAskingFor() {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_askingFor == null)
+      jcasType.jcas.throwFeatMissing("askingFor", "edu.cmu.lti.qalab.types.Question");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_askingFor);}
+    
+  /** setter for askingFor - sets If the question is the appropriate type, what should the answer be? I.e. if it asks "Which amino acid does X?" this feature should be "amino acid" since the answer must be a type of amino acid. 
+   * @generated */
+  public void setAskingFor(String v) {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_askingFor == null)
+      jcasType.jcas.throwFeatMissing("askingFor", "edu.cmu.lti.qalab.types.Question");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Question_Type)jcasType).casFeatCode_askingFor, v);}    
   }
 
     
