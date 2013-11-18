@@ -126,6 +126,7 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 		for(int i=0;i<neList.size();i++){
 			solrQuery+="namedentities:\""+neList.get(i).getText()+"\" ";
 		}
+		
 		ArrayList<VerbPhrase>verbPhrases=Utils.fromFSListToCollection(question.getVerbList(), VerbPhrase.class);
 		
 		for(int i=0;i<verbPhrases.size();i++){
