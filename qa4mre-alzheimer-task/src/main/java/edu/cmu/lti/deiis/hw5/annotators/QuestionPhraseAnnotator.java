@@ -15,6 +15,7 @@ import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.TestDocument;
 import edu.cmu.lti.qalab.types.Token;
+import edu.cmu.lti.qalab.types.VerbPhrase;
 import edu.cmu.lti.qalab.utils.Utils;
 
 public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
@@ -43,6 +44,13 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 			FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 			fsPhraseList.addToIndexes(aJCas);
 			question.setNounList(fsPhraseList);
+			//Extract verb phrases 
+			ArrayList<VerbPhrase> verbPhraseList = extractVerbPhrases(tokenList,
+					aJCas);
+			FSList fsVerbPhraseList = Utils.createVerbPhraseList(aJCas, verbPhraseList);
+			fsVerbPhraseList.addToIndexes(aJCas);
+			question.setVerbList(fsVerbPhraseList);
+			
 			question.addToIndexes();
 			questionList.set(i, question);
 		}
@@ -57,6 +65,14 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 				FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 				fsPhraseList.addToIndexes(aJCas);							
 				ans.setNounPhraseList(fsPhraseList);
+				//Extract VP
+				ArrayList<VerbPhrase> verbPhraseList = extractVerbPhrases(
+						tokenList, aJCas);
+				FSList fsVerbPhraseList = Utils.createVerbPhraseList(aJCas,
+						verbPhraseList);
+				fsVerbPhraseList.addToIndexes(aJCas);
+				ans.setVerbPhraseList(fsVerbPhraseList);
+				
 				ans.addToIndexes();
 				choiceList.set(j, ans);
 			}
@@ -120,5 +136,53 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 		return nounPhraseList;
 	}
 	
+
+
+	public ArrayList<VerbPhrase> extractVerbPhrases(ArrayList<Token> tokenList,
+			JCas jCas) {
+
+		ArrayList<VerbPhrase> verbPhraseList = new ArrayList<VerbPhrase>();
+		String verbPhrase = "";
+		boolean verbFlag = false; 
+		for (int i = 0; i < tokenList.size(); i++) {
+			Token token = tokenList.get(i);
+			String word = token.getText();
+			String pos = token.getPos();
+			if (pos.startsWith("VB")) {
+				verbFlag = true;
+				verbPhrase += word + " ";
+			}
+			else if (pos.startsWith("RB") || pos.startsWith("RP")) {
+				verbPhrase += word + " ";
+			} else {
+				verbPhrase = verbPhrase.trim();
+				
+				if (!verbPhrase.equals("") && verbFlag) {
+					VerbPhrase vb = new VerbPhrase(jCas);
+					vb.setText(verbPhrase);
+					verbPhraseList.add(vb);
+					verbPhrase = "";
+					verbFlag=false;
+				}
+				else
+					if (!verbFlag)
+						verbPhrase ="";
+			}
+
+		}
+		verbPhrase = verbPhrase.trim();
+		if (!verbPhrase.equals("") && verbFlag) {
+			VerbPhrase vb = new VerbPhrase(jCas);
+			vb.setText(verbPhrase);
+			verbPhraseList.add(vb);
+			verbFlag=false;
+			verbPhrase="";
+		}
+		else
+			if (!verbFlag)
+				verbPhrase ="";
+
+		return verbPhraseList;
+	}
 
 }

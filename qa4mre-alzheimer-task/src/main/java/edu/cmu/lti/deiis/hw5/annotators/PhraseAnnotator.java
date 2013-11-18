@@ -13,11 +13,11 @@ import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Sentence;
 import edu.cmu.lti.qalab.types.TestDocument;
 import edu.cmu.lti.qalab.types.Token;
+import edu.cmu.lti.qalab.types.VerbPhrase;
 import edu.cmu.lti.qalab.utils.Utils;
 
-public class PhraseAnnotator extends JCasAnnotator_ImplBase{
+public class PhraseAnnotator extends JCasAnnotator_ImplBase {
 
-	
 	@Override
 	public void initialize(UimaContext context)
 			throws ResourceInitializationException {
@@ -40,6 +40,14 @@ public class PhraseAnnotator extends JCasAnnotator_ImplBase{
 			FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 			fsPhraseList.addToIndexes(aJCas);
 			sent.setPhraseList(fsPhraseList);
+			// for verb phrases
+			ArrayList<VerbPhrase> verbPhraseList = extractVerbPhrases(
+					tokenList, aJCas);
+			FSList fsVerbPhraseList = Utils.createVerbPhraseList(aJCas,
+					verbPhraseList);
+			fsVerbPhraseList.addToIndexes(aJCas);
+			sent.setVerbPhraseList(fsVerbPhraseList);
+
 			sent.addToIndexes();
 			sentenceList.set(i, sent);
 		}
@@ -90,4 +98,51 @@ public class PhraseAnnotator extends JCasAnnotator_ImplBase{
 	}
 	
 
+
+	public ArrayList<VerbPhrase> extractVerbPhrases(ArrayList<Token> tokenList,
+			JCas jCas) {
+
+		ArrayList<VerbPhrase> verbPhraseList = new ArrayList<VerbPhrase>();
+		String verbPhrase = "";
+		boolean verbFlag = false; 
+		for (int i = 0; i < tokenList.size(); i++) {
+			Token token = tokenList.get(i);
+			String word = token.getText();
+			String pos = token.getPos();
+			if (pos.startsWith("VB")) {
+				verbFlag = true;
+				verbPhrase += word + " ";
+			}
+			else if (pos.startsWith("RB") || pos.startsWith("RP")) {
+				verbPhrase += word + " ";
+			} else {
+				verbPhrase = verbPhrase.trim();
+				
+				if (!verbPhrase.equals("") && verbFlag) {
+					VerbPhrase vb = new VerbPhrase(jCas);
+					vb.setText(verbPhrase);
+					verbPhraseList.add(vb);
+					verbPhrase = "";
+					verbFlag=false;
+				}
+				else
+					if (!verbFlag)
+						verbPhrase ="";
+			}
+
+		}
+		verbPhrase = verbPhrase.trim();
+		if (!verbPhrase.equals("") && verbFlag) {
+			VerbPhrase vb = new VerbPhrase(jCas);
+			vb.setText(verbPhrase);
+			verbPhraseList.add(vb);
+			verbFlag=false;
+			verbPhrase="";
+		}
+		else
+			if (!verbFlag)
+				verbPhrase ="";
+
+		return verbPhraseList;
+	}
 }
