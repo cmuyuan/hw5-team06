@@ -21,6 +21,7 @@ import edu.cmu.lti.qalab.types.Question;
 import edu.cmu.lti.qalab.types.QuestionAnswerSet;
 import edu.cmu.lti.qalab.types.Sentence;
 import edu.cmu.lti.qalab.types.TestDocument;
+import edu.cmu.lti.qalab.types.VerbPhrase;
 import edu.cmu.lti.qalab.utils.Utils;
 
 public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
@@ -123,6 +124,12 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 		ArrayList<NER>neList=Utils.fromFSListToCollection(question.getNerList(), NER.class);
 		for(int i=0;i<neList.size();i++){
 			solrQuery+="namedentities:\""+neList.get(i).getText()+"\" ";
+		}
+		
+		ArrayList<VerbPhrase>verbPhrases=Utils.fromFSListToCollection(question.getVerbList(), VerbPhrase.class);
+		
+		for(int i=0;i<verbPhrases.size();i++){
+              solrQuery+="verbphrases:\""+verbPhrases.get(i).getText()+"\" ";                
 		}
 		solrQuery=solrQuery.trim();
 		
