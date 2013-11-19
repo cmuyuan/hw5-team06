@@ -17,7 +17,7 @@ public class WordNetAPI {
 	static{
 
 
-		System.setProperty("wordnet.database.dir", "/usr/share/wordnet");
+		System.setProperty("wordnet.database.dir", "./model/wordnet");
 
 
 	}

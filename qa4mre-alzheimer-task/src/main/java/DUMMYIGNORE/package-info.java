@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author richie
- *
- */
-package DUMMYIGNORE;
