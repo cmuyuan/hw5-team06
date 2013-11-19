@@ -131,9 +131,11 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 		for(int i=0;i<verbPhrases.size();i++){
               solrQuery+="verbphrases:\""+verbPhrases.get(i).getText()+"\" ";                
 		}
+		
+		
+		
 		solrQuery=solrQuery.trim();
-		
-		
+		System.out.println(solrQuery);
 		return solrQuery;
 	}
 
