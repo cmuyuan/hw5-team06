@@ -30,9 +30,6 @@
   <delegateAnalysisEngine key="QuestionCategoryAnnotator">
       <import name="annotators.QuestionCategoryAnnotator"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="AnswerSelectionMario">
-      <import name="annotators.AnswerSelectionMario"/>
-    </delegateAnalysisEngine>
   <delegateAnalysisEngine key="QuestionPhraseAnnotator">
       <import name="annotators.QuestionPhraseAnnotator"/>
     </delegateAnalysisEngine>
