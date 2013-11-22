@@ -9,6 +9,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import edu.cmu.lti.deiis.hw5.utils.SynonymUtil;
 import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Sentence;
 import edu.cmu.lti.qalab.types.TestDocument;
@@ -37,6 +38,9 @@ public class PhraseAnnotator extends JCasAnnotator_ImplBase{
 			Sentence sent=sentenceList.get(i);
 			ArrayList<Token>tokenList= Utils.getTokenListFromSentenceList(sent);
 			ArrayList<NounPhrase>phraseList=extractNounPhrases(tokenList,aJCas);
+		
+			SynonymUtil.populateSynonyms(phraseList, aJCas);
+		
 			FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 			fsPhraseList.addToIndexes(aJCas);
 			sent.setPhraseList(fsPhraseList);

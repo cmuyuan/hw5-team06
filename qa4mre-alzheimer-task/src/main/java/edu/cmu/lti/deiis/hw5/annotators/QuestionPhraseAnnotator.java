@@ -9,6 +9,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import edu.cmu.lti.deiis.hw5.utils.SynonymUtil;
 import edu.cmu.lti.qalab.types.Answer;
 import edu.cmu.lti.qalab.types.NounPhrase;
 import edu.cmu.lti.qalab.types.Question;
@@ -40,6 +41,8 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 			Question question=questionList.get(i);
 			ArrayList<Token>tokenList= Utils.getTokenListFromQuestion(question);
 			ArrayList<NounPhrase>phraseList=extractNounPhrases(tokenList,aJCas);
+		
+			//do something here
 			FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 			fsPhraseList.addToIndexes(aJCas);
 			question.setNounList(fsPhraseList);
@@ -54,6 +57,8 @@ public class QuestionPhraseAnnotator extends JCasAnnotator_ImplBase{
 				Answer ans=choiceList.get(j);
 				ArrayList<Token>tokenList= Utils.fromFSListToCollection(ans.getTokenList(),Token.class);
 				ArrayList<NounPhrase>phraseList=extractNounPhrases(tokenList,aJCas);
+				SynonymUtil.populateSynonyms(phraseList, aJCas);
+
 				FSList fsPhraseList=Utils.createNounPhraseList(aJCas, phraseList);
 				fsPhraseList.addToIndexes(aJCas);							
 				ans.setNounPhraseList(fsPhraseList);
