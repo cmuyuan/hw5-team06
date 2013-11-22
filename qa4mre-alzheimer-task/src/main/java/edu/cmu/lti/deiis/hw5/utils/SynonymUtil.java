@@ -20,10 +20,10 @@ public class SynonymUtil {
 		for (NounPhrase phrase : phraseList) {
 			String phraseText = phrase.getCoveredText();
 			FSList synFsListphrase = phrase.getSynonyms();
-
+//if(synFsListphrase==null)
+	//return null;
 			// synFsListphrase.get
-		List<Synonym> synList = Utils.fromFSListToCollection(
-					synFsListphrase, Synonym.class);
+		List<Synonym> synList = Utils.fromFSListToCollection(synFsListphrase, Synonym.class);
 			String[] phraseWord = phraseText.split(" ");
 			Set<String> wordNetSynList = null;
 			for (String word : phraseWord) {

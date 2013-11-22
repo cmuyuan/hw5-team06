@@ -14,6 +14,8 @@ import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.SynsetType;
 import edu.smu.tspell.wordnet.VerbSynset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
+import edu.smu.tspell.wordnet.WordSense;
+import edu.smu.tspell.wordnet.impl.file.synset.AdverbReferenceSynset;
 import edu.smu.tspell.wordnet.impl.file.synset.VerbReferenceSynset;
 import static edu.cmu.lti.deiis.hw5.utils.SetUtil.*;
 
@@ -27,17 +29,19 @@ public class WordNetAPI {
 
 	}
 
-	
 	public static Set<String> getHyponyms(String word, Set<String> set) {
 
 		Set<String> cachedWords = cache.get(word);
 		if (cachedWords != null)
 			return cachedWords;
 
+		WordNetDatabase database = WordNetDatabase.getFileInstance();
+		// database.getBaseFormCandidates(word,SynsetType.ADJECTIVE );
 		set = checkSet(set);
 		set = getNounHyponyms(word, set);
 		set = getVerbHyponyms(word, set);
 		set = getAdjectiveHyponyms(word, set);
+		set = getAdverbHyponyms(word, set);
 
 		cache.put(word, set);
 		return set;
@@ -55,7 +59,7 @@ public class WordNetAPI {
 		NounSynset[] hypernyms;
 
 		WordNetDatabase database = WordNetDatabase.getFileInstance();
-		database.getBaseFormCandidates(word, SynsetType.NOUN);
+		// database.getBaseFormCandidates(word, SynsetType.NOUN);
 		// Synset[] synsets = database.getSynsets(word, SynsetType.VERB);
 		Synset[] synsets = database.getSynsets(word, SynsetType.NOUN);
 		// database.get
@@ -147,11 +151,67 @@ public class WordNetAPI {
 
 	}
 
+	public static Set<String> getAdverbHyponyms(String word, Set<String> set) {
+		// Set<String> set=new HashSet<String>();
+		set = checkSet(set);
+		AdverbReferenceSynset adverbSynset;
+		WordSense[] related;
+		// AdverbReferenceSynset[] similar;
+		WordNetDatabase database = WordNetDatabase.getFileInstance();
+		Synset[] synsets = database.getSynsets(word, SynsetType.ADVERB);
+		Set<String> local = new HashSet<String>();
+		for (int i = 0; i < synsets.length; i++) {
+			adverbSynset = (AdverbReferenceSynset) (synsets[i]);
+			SetUtil.addStringArray(local, adverbSynset.getWordForms());
+
+			// for(adverbSynset.get)
+			{
+				related = adverbSynset.getPertainyms(word);
+				// similar = adjSynset.get
+
+				WordSense[] z = adverbSynset
+						.getDerivationallyRelatedForms(word);
+
+				for (WordSense rel : related) {
+					local.add(rel.getWordForm());
+					// SetUtil.addStringArray(set, rel.getWordForm());
+				}
+
+				for (WordSense rel : z) {
+					local.add(rel.getWordForm());
+					// SetUtil.addStringArray(set, rel.getWordForm());
+				}
+			}
+			/*
+			 * for (int j = 0; j < similar.length; j++) { AdjectiveSynset
+			 * adjectiveSynset = similar[j]; SetUtil.addStringArray(set,
+			 * adjectiveSynset.getWordForms()); }
+			 * 
+			 * for (int j = 0; j < related.length; j++) { AdjectiveSynset hpn =
+			 * related[j]; SetUtil.addStringArray(set, hpn.getWordForms()); }
+			 */
+
+		}
+
+		for (String lword : local) {
+			set = getNounHyponyms(lword, set);
+			set = getVerbHyponyms(lword, set);
+			set = getAdjectiveHyponyms(lword, set);
+		set.add(lword);
+		}
+
+		
+		
+		
+		return set;
+
+	}
+
 	public static void main(String args[]) {
-		Set<String> hyponymList = getHyponyms("education", null);
+		Set<String> hyponymList = getHyponyms("quickly", null);
 		// Set<String> hyponymList=getVerbHyponyms("transform",null);
 		// Set<String> hyponymList=getAdjectiveHyponyms("beautiful",null);
-
+		// Set<String> hyponymList =getAdverbHyponyms("swiftly", null);
 		System.out.println("--------------------hyponymList-------------");
 		for (String hpm : hyponymList) {
 			System.out.println(hpm);

@@ -23,7 +23,7 @@ import edu.cmu.lti.qalab.types.TestDocument;
 import edu.cmu.lti.qalab.types.Token;
 import edu.cmu.lti.qalab.utils.Utils;
 
-public class AnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
+public class CopyOfAnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
 
 	int K_CANDIDATES = 5;
 
@@ -62,9 +62,6 @@ public class AnswerChoiceCandAnsSynonymScorer extends JCasAnnotator_ImplBase {
 
 				ArrayList<Token> candSentTokens = Utils
 						.fromFSListToCollection(candSent.getSentence().getTokenList(),Token.class);
-				//ArrayList<Token> candSentTokens = Utils
-					//		.fromFSListToCollection(candSent.getSentence().getPhraseList(),Phrase.class);
-				
 								//.getPhraseList(), NounPhrase.class);//getNouns
 				//ArrayList<NER> candSentNers = Utils.fromFSListToCollection(
 					//	candSent.getSentence().getNerList(), NER.class);
