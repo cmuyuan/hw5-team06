@@ -1,21 +1,19 @@
 
 
-/* First created by JCasGen Mon Mar 25 03:46:07 EDT 2013 */
+/* First created by JCasGen Sat Nov 23 03:19:24 EST 2013 */
 package edu.cmu.lti.qalab.types;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-
-
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Nov 18 17:28:58 EST 2013
- * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
+ * Updated by JCasGen Sat Nov 23 03:19:24 EST 2013
+ * XML source: E:/git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class CandidateSentence extends Annotation {
   /** @generated

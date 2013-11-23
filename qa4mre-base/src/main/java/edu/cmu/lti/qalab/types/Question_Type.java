@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Feb 20 04:59:42 EST 2013 */
+/* First created by JCasGen Sat Nov 23 03:19:24 EST 2013 */
 package edu.cmu.lti.qalab.types;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Mon Nov 18 17:28:58 EST 2013
+ * Updated by JCasGen Sat Nov 23 03:19:24 EST 2013
  * @generated */
 public class Question_Type extends Annotation_Type {
   /** @generated */
@@ -169,42 +169,6 @@ public class Question_Type extends Annotation_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_tokenList, v);}
     
   
- 
-  /** @generated */
-  final Feature casFeat_category;
-  /** @generated */
-  final int     casFeatCode_category;
-  /** @generated */ 
-  public String getCategory(int addr) {
-        if (featOkTst && casFeat_category == null)
-      jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Question");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_category);
-  }
-  /** @generated */    
-  public void setCategory(int addr, String v) {
-        if (featOkTst && casFeat_category == null)
-      jcas.throwFeatMissing("category", "edu.cmu.lti.qalab.types.Question");
-    ll_cas.ll_setStringValue(addr, casFeatCode_category, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_askingFor;
-  /** @generated */
-  final int     casFeatCode_askingFor;
-  /** @generated */ 
-  public String getAskingFor(int addr) {
-        if (featOkTst && casFeat_askingFor == null)
-      jcas.throwFeatMissing("askingFor", "edu.cmu.lti.qalab.types.Question");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_askingFor);
-  }
-  /** @generated */    
-  public void setAskingFor(int addr, String v) {
-        if (featOkTst && casFeat_askingFor == null)
-      jcas.throwFeatMissing("askingFor", "edu.cmu.lti.qalab.types.Question");
-    ll_cas.ll_setStringValue(addr, casFeatCode_askingFor, v);}
-    
-  
 
 
 
@@ -241,14 +205,6 @@ public class Question_Type extends Annotation_Type {
  
     casFeat_tokenList = jcas.getRequiredFeatureDE(casType, "tokenList", "uima.cas.FSList", featOkTst);
     casFeatCode_tokenList  = (null == casFeat_tokenList) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tokenList).getCode();
-
- 
-    casFeat_category = jcas.getRequiredFeatureDE(casType, "category", "uima.cas.String", featOkTst);
-    casFeatCode_category  = (null == casFeat_category) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_category).getCode();
-
- 
-    casFeat_askingFor = jcas.getRequiredFeatureDE(casType, "askingFor", "uima.cas.String", featOkTst);
-    casFeatCode_askingFor  = (null == casFeat_askingFor) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_askingFor).getCode();
 
   }
 }

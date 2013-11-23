@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Mar 25 03:46:07 EDT 2013 */
+/* First created by JCasGen Sat Nov 23 03:19:24 EST 2013 */
 package edu.cmu.lti.qalab.types;
 
 import org.apache.uima.jcas.JCas;
@@ -11,11 +11,10 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
-
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Nov 17 17:48:56 EST 2013
+ * Updated by JCasGen Sat Nov 23 03:19:24 EST 2013
  * @generated */
 public class CandidateSentence_Type extends Annotation_Type {
   /** @generated */

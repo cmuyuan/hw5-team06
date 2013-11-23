@@ -50,7 +50,9 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 					.fromFSListToCollection(qaSet.get(i)
 							.getCandidateSentenceList(),
 							CandidateSentence.class);
-
+			
+			int candSentNum=candSentList.size();
+			
 			int topK = Math.min(K_CANDIDATES, candSentList.size());
 			String correct = "";
 
@@ -77,15 +79,29 @@ public class AnswerSelectionByKCandAggregation extends JCasAnnotator_ImplBase {
 					CandidateAnswer candAns = candAnswerList.get(j);
 					String answer = candAns.getText();
 					double totalScore = candAns.getSimilarityScore()
-							+ candAns.getSynonymScore() + candAns.getPMIScore();
+							+ candAns.getSynonymScore() + candAns.getPMIScore()+ candAns.getVectorSimilarityScore();;
 
 					Double existingVal=hshAnswer.get(answer);
 					if(existingVal==null){
 						existingVal=new Double(0.0);
 					}
-					hshAnswer.put(answer, existingVal+totalScore);
+					if(candSentNum==0){
+					hshAnswer.put(answer, existingVal+0);
+					}else{
+					  hshAnswer.put(answer, existingVal+totalScore/candSentNum);
+					}
 					
 				}
+			}
+			
+			for(int c=0;c<choiceList.size();c++){
+			  String answer=choiceList.get(c).getText();
+			  Double existingVal=hshAnswer.get(answer);
+        if(existingVal==null){
+          existingVal=new Double(0.0);
+        }
+        System.out.println(answer+": score"+existingVal+" score"+choiceList.get(c).getAnswerScore());
+        hshAnswer.put(answer, existingVal+choiceList.get(c).getAnswerScore());
 			}
 
 			String bestChoice = null;

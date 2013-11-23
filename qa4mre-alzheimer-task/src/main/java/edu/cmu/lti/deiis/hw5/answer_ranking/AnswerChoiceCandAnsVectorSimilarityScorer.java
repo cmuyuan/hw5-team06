@@ -171,8 +171,8 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 					}
 					
 				
-					System.out.println(choiceList.get(j).getText() + "\t"
-							+ similarityScore);
+					//System.out.println(choiceList.get(j).getText() + "\t"
+					//		+ similarityScore);
 					CandidateAnswer candAnswer = null;
 					if (candSent.getCandAnswerList() == null) {
 						candAnswer = new CandidateAnswer(aJCas);

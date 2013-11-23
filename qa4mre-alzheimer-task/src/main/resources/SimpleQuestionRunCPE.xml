@@ -30,6 +30,9 @@
   <delegateAnalysisEngine key="AnswerChoiceCandAnsVectorSimilarityScorer">
       <import name="annotators.AnswerChoiceCandAnsVectorSimilarityScorer"/>
     </delegateAnalysisEngine>
+  <delegateAnalysisEngine key="AnswerCandSentSimilarityMatcher">
+      <import name="annotators.AnswerCandSentSimilarityMatcher"/>
+    </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
     <name>CpeQuestionDescriptor</name>
@@ -43,11 +46,12 @@
         <node>QuestionCandSentSimilarityMatcher</node>
         <!-- <node>QuestionCandSentSynonymMatcher</node>-->
         <!-- <node>QuestionCandSentDependencyMatcher</node>-->
-        <node>AnswerChoiceCandAnsVectorSimilarityScorer</node>
+        <node>AnswerCandSentSimilarityMatcher</node>
         <!-- <node>AnswerChoiceCandAnsSynonymScorer</node>-->
         <!--<node>AnswerChoiceCandAnsPMIScorer</node>-->
-        <node>AnswerChoiceCandAnsSimilarityScorer</node>
-      <node>AnswerSelectionByKCandVoting</node>
+        <node>AnswerChoiceCandAnsVectorSimilarityScorer</node>
+      <node>AnswerChoiceCandAnsSimilarityScorer</node>
+      <node>AnswerSelectionByKCandAggregation</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>

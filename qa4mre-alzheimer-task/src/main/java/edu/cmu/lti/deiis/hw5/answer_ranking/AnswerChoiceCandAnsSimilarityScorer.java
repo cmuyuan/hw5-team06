@@ -75,14 +75,17 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 						// If candidate Noun Phrase contains answer NER
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNERs.get(l).getText())) {
+									.contains(choiceNERs.get(l).getText())
+									||choiceNERs.get(l).getText().contains(candSentNouns.get(k).getText())) {
 								nerMatch++;
 							}
 						}
 						// If candidate Noun phrase contains answer Nouns
 						for (int l = 0; l < choiceNouns.size(); l++) {
 							if (candSentNouns.get(k).getText()
-									.contains(choiceNouns.get(l).getText())) {
+									.contains(choiceNouns.get(l).getText())
+									||choiceNouns.get(l).getText()
+                  .contains(candSentNouns.get(k).getText())) {
 								nnMatch++;
 							}
 						}
@@ -92,13 +95,17 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
 							if (candSentNers.get(k).getText()
-									.contains(choiceNERs.get(l).getText())) {
+									.contains(choiceNERs.get(l).getText())
+									||choiceNERs.get(l).getText()
+                  .contains(candSentNers.get(k).getText())) {
 								nerMatch++;
 							}
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
 							if (candSentNers.get(k).getText()
-									.contains(choiceNouns.get(l).getText())) {
+									.contains(choiceNouns.get(l).getText())
+									||choiceNouns.get(l).getText()
+                  .contains(candSentNers.get(k).getText())) {
 								nnMatch++;
 							}
 						}
@@ -106,8 +113,8 @@ public class AnswerChoiceCandAnsSimilarityScorer extends JCasAnnotator_ImplBase 
 					}
 					// Add scores of matches of Answer NER with NN 
 					nnMatch+=nerMatch;
-					System.out.println(choiceList.get(j).getText() + "\t"
-							+ nnMatch);
+					//System.out.println(choiceList.get(j).getText() + "\t"
+					//		+ nnMatch);
 					CandidateAnswer candAnswer = null;
 					if (candSent.getCandAnswerList() == null) {
 						candAnswer = new CandidateAnswer(aJCas);

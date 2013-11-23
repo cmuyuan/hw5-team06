@@ -92,7 +92,44 @@ public class QuestionCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 					candSent.setSentence(annSentence);
 					candSent.setRelevanceScore(relScore);
 					candidateSentList.add(candSent);
-					System.out.println(relScore+"\t"+sentence);
+					//System.out.println(relScore+"\t"+sentence);
+					
+					// Search for previous sentence and next sentence
+					if(idx-1>=0){
+					  Sentence annSentencePrev=sentenceList.get(idx-1);
+            String sentencePrev=annSentencePrev.getText();
+            double relScorePrev=relScore*2/3;
+            CandidateSentence candSentPrev=new CandidateSentence(aJCas);
+            candSentPrev.setSentence(annSentencePrev);
+            candSentPrev.setRelevanceScore(relScorePrev);
+            candidateSentList.add(candSentPrev);
+            //System.out.println("Prev"+relScorePrev+"\t"+sentencePrev);
+					}
+					if(idx+1<sentenceList.size()){
+            Sentence annSentenceNext=sentenceList.get(idx+1);
+            String sentenceNext=annSentenceNext.getText();
+            double relScoreNext=relScore*2/3;
+            CandidateSentence candSentNext=new CandidateSentence(aJCas);
+            candSentNext.setSentence(annSentenceNext);
+            candSentNext.setRelevanceScore(relScoreNext);
+            candidateSentList.add(candSentNext);
+            //System.out.println("Next"+relScoreNext+"\t"+sentenceNext);
+          }
+				}
+				
+				for(int j=0;j<candidateSentList.size();j++){
+				  for(int k=j+1;k<candidateSentList.size();k++){
+				    if(candidateSentList.get(j).getRelevanceScore()<candidateSentList.get(k).getRelevanceScore()){
+				      CandidateSentence t;
+				      t=candidateSentList.get(j);
+				      candidateSentList.set(j, candidateSentList.get(k));
+				      candidateSentList.set(k,t);
+				    }
+				  }
+				}
+				
+				for(int j=0;j<candidateSentList.size();j++){
+				  System.out.println(candidateSentList.get(j).getRelevanceScore()+"\t"+candidateSentList.get(j).getSentence().getText());
 				}
 				FSList fsCandidateSentList=Utils.fromCollectionToFSList(aJCas, candidateSentList);
 				fsCandidateSentList.addToIndexes();

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Feb 17 07:02:44 EST 2013 */
+/* First created by JCasGen Sat Nov 23 03:19:24 EST 2013 */
 package edu.cmu.lti.qalab.types;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Mon Nov 18 17:28:58 EST 2013
+ * Updated by JCasGen Sat Nov 23 03:19:24 EST 2013
  * @generated */
 public class Answer_Type extends Annotation_Type {
   /** @generated */
@@ -259,6 +259,42 @@ public class Answer_Type extends Annotation_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_dependencies, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_AnswerScore;
+  /** @generated */
+  final int     casFeatCode_AnswerScore;
+  /** @generated */ 
+  public double getAnswerScore(int addr) {
+        if (featOkTst && casFeat_AnswerScore == null)
+      jcas.throwFeatMissing("AnswerScore", "edu.cmu.lti.qalab.types.Answer");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_AnswerScore);
+  }
+  /** @generated */    
+  public void setAnswerScore(int addr, double v) {
+        if (featOkTst && casFeat_AnswerScore == null)
+      jcas.throwFeatMissing("AnswerScore", "edu.cmu.lti.qalab.types.Answer");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_AnswerScore, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_AnswerVectorScore;
+  /** @generated */
+  final int     casFeatCode_AnswerVectorScore;
+  /** @generated */ 
+  public double getAnswerVectorScore(int addr) {
+        if (featOkTst && casFeat_AnswerVectorScore == null)
+      jcas.throwFeatMissing("AnswerVectorScore", "edu.cmu.lti.qalab.types.Answer");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_AnswerVectorScore);
+  }
+  /** @generated */    
+  public void setAnswerVectorScore(int addr, double v) {
+        if (featOkTst && casFeat_AnswerVectorScore == null)
+      jcas.throwFeatMissing("AnswerVectorScore", "edu.cmu.lti.qalab.types.Answer");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_AnswerVectorScore, v);}
+    
+  
 
 
 
@@ -315,6 +351,14 @@ public class Answer_Type extends Annotation_Type {
  
     casFeat_dependencies = jcas.getRequiredFeatureDE(casType, "dependencies", "uima.cas.FSList", featOkTst);
     casFeatCode_dependencies  = (null == casFeat_dependencies) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_dependencies).getCode();
+
+ 
+    casFeat_AnswerScore = jcas.getRequiredFeatureDE(casType, "AnswerScore", "uima.cas.Double", featOkTst);
+    casFeatCode_AnswerScore  = (null == casFeat_AnswerScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_AnswerScore).getCode();
+
+ 
+    casFeat_AnswerVectorScore = jcas.getRequiredFeatureDE(casType, "AnswerVectorScore", "uima.cas.Double", featOkTst);
+    casFeatCode_AnswerVectorScore  = (null == casFeat_AnswerVectorScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_AnswerVectorScore).getCode();
 
   }
 }
