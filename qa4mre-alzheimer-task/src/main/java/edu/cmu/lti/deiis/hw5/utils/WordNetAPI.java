@@ -50,6 +50,8 @@ public class WordNetAPI {
 		set=checkSet(set);
 
 		//wordnet-sense-index
+		
+		
 		NounSynset nounSynset; 
 		//VerbReferenceSynset nounSynset;
 		NounSynset[] hyponyms; 
