@@ -30,7 +30,9 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 
 	int K_CANDIDATES = 5;
 	DistributionalSimilarity vectorModel;
-
+	double thresh = 0.5;
+	boolean oov = false; 
+	
 	@Override
 	public void initialize(UimaContext context)
 			throws ResourceInitializationException {
@@ -38,8 +40,6 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 		K_CANDIDATES = (Integer) context
 				.getConfigParameterValue("K_CANDIDATES");
 		vectorModel = new DistributionalSimilarity();
-		// String filename =
-		// "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
 		String filename = "model\\alzheimer.tok.model.320";
 		try {
 			vectorModel.readModel(filename);			
@@ -53,7 +53,7 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 		TestDocument testDoc = Utils.getTestDocumentFromCAS(aJCas);
 		ArrayList<QuestionAnswerSet> qaSet = Utils
 				.getQuestionAnswerSetFromTestDocCAS(aJCas);
-
+		
 		for (int i = 0; i < qaSet.size(); i++) {
 
 			Question question = qaSet.get(i).getQuestion();
@@ -67,6 +67,7 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 							CandidateSentence.class);
 
 			int topK = Math.min(K_CANDIDATES, candSentList.size());
+			
 			for (int c = 0; c < topK; c++) {
 				CandidateSentence candSent = candSentList.get(c);
 
@@ -78,19 +79,6 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 				ArrayList<VerbPhrase> candSentVerbs = Utils
 						.fromFSListToCollection(candSent.getSentence()
 								.getPhraseList(), VerbPhrase.class);
-				// For matching complete NN and NER 
-				StringBuilder candSentNounString = new StringBuilder();
-				for (int k = 0; k < candSentNouns.size(); k++) {
-					candSentNounString.append(candSentNouns.get(k).getText());
-					candSentNounString.append(" ");
-				}
-				
-				StringBuilder candSentNerString = new StringBuilder();
-				for (int k = 0; k < candSentNers.size(); k++) {
-					candSentNerString.append(candSentNers.get(k).getText());
-					candSentNerString.append(" ");
-				}
-				
 				
 				ArrayList<CandidateAnswer> candAnsList = new ArrayList<CandidateAnswer>();
 				for (int j = 0; j < choiceList.size(); j++) {
@@ -99,88 +87,82 @@ public class AnswerChoiceCandAnsVectorSimilarityScorer extends
 					ArrayList<NounPhrase> choiceNouns = Utils
 							.fromFSListToCollection(answer.getNounPhraseList(),
 									NounPhrase.class);
+					
 					ArrayList<VerbPhrase> choiceVerbs = Utils
 							.fromFSListToCollection(answer.getVerbPhraseList(),
 									VerbPhrase.class);
 					
 					ArrayList<NER> choiceNERs = Utils.fromFSListToCollection(
 							answer.getNerList(), NER.class);
-
+					
 					double similarityScore = 0.0;
 				
-					// Combining all NN and NER into 1
-					/*
-					StringBuilder choiceNounString = new StringBuilder();
-					for (int k = 0; k < choiceNouns.size(); k++) {
-						choiceNounString.append(choiceNouns.get(k).getText());
-						choiceNounString.append(" ");
-					}
-					
-					StringBuilder choiceNerString = new StringBuilder();
-					for (int k = 0; k < choiceNERs.size(); k++) {
-						choiceNerString.append(choiceNERs.get(k).getText());
-						choiceNerString.append(" ");
-					}
-					similarityScore += vectorModel.getDistance(candSentNounString.toString(), choiceNounString.toString());
-					similarityScore += vectorModel.getDistance(candSentNerString.toString(), choiceNerString.toString());
-					*/
 					// Standard way of scoring NER and NNs
-					
+					int count=0;
+					double distance=0.0;
 					for (int k = 0; k < candSentNouns.size(); k++) {
 						// If candidate Noun Phrase contains answer NER
 						for (int l = 0; l < choiceNERs.size(); l++) {
-							similarityScore += vectorModel.getDistance(
+							distance = vectorModel.getDistance(
 									candSentNouns.get(k).getText(), choiceNERs
 											.get(l).getText());
+							similarityScore += distance;
+							count++;
 						}
 
 						// If candidate Noun phrase contains answer Nouns
 						for (int l = 0; l < choiceNouns.size(); l++) {
-							similarityScore += vectorModel.getDistance(
+							distance = vectorModel.getDistance(
 									candSentNouns.get(k).getText(), choiceNouns
 											.get(l).getText());
-
+							similarityScore += distance;
+							count++;
 						}
-
+						
 					}
 				
 					//For verb phrase
 					for (int k = 0; k < candSentVerbs.size(); k++) {
 						// If candidate Noun Phrase contains answer NER
 						for (int l = 0; l < choiceVerbs.size(); l++) {
-							similarityScore += vectorModel.getDistance(
+							distance = vectorModel.getDistance(
 									candSentVerbs.get(k).getText(), choiceVerbs
 											.get(l).getText());
+							similarityScore += distance;
+							count++;
 						}
 					}
-
+					
 					
 					// Same as above, for NERs
 					for (int k = 0; k < candSentNers.size(); k++) {
 						for (int l = 0; l < choiceNERs.size(); l++) {
-							similarityScore += vectorModel.getDistance(
+							distance = vectorModel.getDistance(
 									candSentNers.get(k).getText(), choiceNERs
 											.get(l).getText());
+							similarityScore += distance;
+							count++;
 
 						}
 						for (int l = 0; l < choiceNouns.size(); l++) {
-							similarityScore += vectorModel.getDistance(
+							distance = vectorModel.getDistance(
 									candSentNers.get(k).getText(), choiceNouns
 											.get(l).getText());
+							similarityScore += distance;
+							count++;
 						}
 					}
 					
-				
+					//similarityScore = similarityScore/count; 
 					System.out.println(choiceList.get(j).getText() + "\t"
-							+ similarityScore);
+							+ similarityScore+","+count);
 					CandidateAnswer candAnswer = null;
 					if (candSent.getCandAnswerList() == null) {
 						candAnswer = new CandidateAnswer(aJCas);
 					} else {
 						candAnswer = Utils.fromFSListToCollection(
 								candSent.getCandAnswerList(),
-								CandidateAnswer.class).get(j);// new
-																// CandidateAnswer(aJCas);;
+								CandidateAnswer.class).get(j);
 
 					}
 					candAnswer.setText(answer.getText());
