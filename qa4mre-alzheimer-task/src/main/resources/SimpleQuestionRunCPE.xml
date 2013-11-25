@@ -46,8 +46,7 @@
         <node>AnswerChoiceCandAnsVectorSimilarityScorer</node>
         <!-- <node>AnswerChoiceCandAnsSynonymScorer</node>-->
         <!--<node>AnswerChoiceCandAnsPMIScorer</node>-->
-        <node>AnswerChoiceCandAnsSimilarityScorer</node>
-      <node>AnswerSelectionByKCandVoting</node>
+        <node>AnswerSelectionByKCandVoting</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>
