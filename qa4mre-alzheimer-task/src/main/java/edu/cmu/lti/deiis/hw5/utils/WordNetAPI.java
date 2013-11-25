@@ -21,12 +21,12 @@ import static edu.cmu.lti.deiis.hw5.utils.SetUtil.*;
 
 public class WordNetAPI {
 	private static Map<String, Set<String>> cache = null;
-
+	private static  DistributionalSimilarity ds=null;
 	static {
 
 		cache = new HashMap<String, Set<String>>();
 		System.setProperty(WordNetConstants.DIR_ATT, WordNetConstants.DIR_PATH);
-
+		 ds=new DistributionalSimilarity();
 	}
 
 	public static Set<String> getHyponyms(String word, Set<String> set) {
@@ -43,6 +43,7 @@ public class WordNetAPI {
 		set = getAdjectiveHyponyms(word, set);
 		set = getAdverbHyponyms(word, set);
 
+		set=addStringArray(set,ds.testModel(word));
 		cache.put(word, set);
 		return set;
 

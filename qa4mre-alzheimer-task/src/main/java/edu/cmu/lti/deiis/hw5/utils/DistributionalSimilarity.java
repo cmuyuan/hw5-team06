@@ -113,14 +113,13 @@ public class DistributionalSimilarity {
 
 	}
 
-	public void testModel(String query) {
+	public String[] testModel(String query) {
 
 		String queryArray[] = query.split(" ");
 
 		int a;
 		double[] queryVector;
 		queryVector = getSentenceVector(query);
-
 		int topN = 20;
 		String[] bestw = new String[topN];
 		double[] bestd = new double[topN];
@@ -157,8 +156,10 @@ public class DistributionalSimilarity {
 			}
 		}
 
-		for (a = 0; a < topN; a++)
-			System.out.println(bestw[a] + "\t" + bestd[a]);
+	//	for (a = 0; a < topN; a++)
+	//		System.out.println(bestw[a] + "\t" + bestd[a]);
+
+	return bestw;
 	}
 	public boolean isOOV(String word){
 		if (vocab.contains(word))
