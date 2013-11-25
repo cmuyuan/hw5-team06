@@ -12,8 +12,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Thu Nov 21 18:23:09 EST 2013
- * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
+ * Updated by JCasGen Sun Nov 24 22:43:33 EST 2013
+ * XML source: E:/git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class Answer extends Annotation {
   /** @generated
@@ -277,6 +277,24 @@ public class Answer extends Annotation {
     if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_dependencies == null)
       jcasType.jcas.throwFeatMissing("dependencies", "edu.cmu.lti.qalab.types.Answer");
     jcasType.ll_cas.ll_setRefValue(addr, ((Answer_Type)jcasType).casFeatCode_dependencies, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: AnswerScore
+
+  /** getter for AnswerScore - gets 
+   * @generated */
+  public double getAnswerScore() {
+    if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_AnswerScore == null)
+      jcasType.jcas.throwFeatMissing("AnswerScore", "edu.cmu.lti.qalab.types.Answer");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((Answer_Type)jcasType).casFeatCode_AnswerScore);}
+    
+  /** setter for AnswerScore - sets  
+   * @generated */
+  public void setAnswerScore(double v) {
+    if (Answer_Type.featOkTst && ((Answer_Type)jcasType).casFeat_AnswerScore == null)
+      jcasType.jcas.throwFeatMissing("AnswerScore", "edu.cmu.lti.qalab.types.Answer");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((Answer_Type)jcasType).casFeatCode_AnswerScore, v);}    
   }
 
     

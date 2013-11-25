@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Thu Nov 21 18:23:09 EST 2013
+ * Updated by JCasGen Sun Nov 24 22:43:34 EST 2013
  * @generated */
 public class CandidateAnswer_Type extends Annotation_Type {
   /** @generated */
@@ -151,7 +151,9 @@ public class CandidateAnswer_Type extends Annotation_Type {
     ll_cas.ll_setDoubleValue(addr, casFeatCode_vectorSimilarityScore, v);}
     
   
- 
+
+
+
   /** @generated */
   final Feature casFeat_synonymScore;
   /** @generated */
@@ -169,9 +171,7 @@ public class CandidateAnswer_Type extends Annotation_Type {
     ll_cas.ll_setDoubleValue(addr, casFeatCode_synonymScore, v);}
     
   
-
-
-
+ 
   /** initialize variables to correspond with Cas Type and Features
 	* @generated */
   public CandidateAnswer_Type(JCas jcas, Type casType) {
@@ -199,12 +199,12 @@ public class CandidateAnswer_Type extends Annotation_Type {
     casFeatCode_similarityScore  = (null == casFeat_similarityScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_similarityScore).getCode();
 
  
-    casFeat_vectorSimilarityScore = jcas.getRequiredFeatureDE(casType, "vectorSimilarityScore", "uima.cas.Double", featOkTst);
-    casFeatCode_vectorSimilarityScore  = (null == casFeat_vectorSimilarityScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_vectorSimilarityScore).getCode();
-
- 
     casFeat_synonymScore = jcas.getRequiredFeatureDE(casType, "synonymScore", "uima.cas.Double", featOkTst);
     casFeatCode_synonymScore  = (null == casFeat_synonymScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_synonymScore).getCode();
+
+ 
+    casFeat_vectorSimilarityScore = jcas.getRequiredFeatureDE(casType, "vectorSimilarityScore", "uima.cas.Double", featOkTst);
+    casFeatCode_vectorSimilarityScore  = (null == casFeat_vectorSimilarityScore) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_vectorSimilarityScore).getCode();
 
   }
 }

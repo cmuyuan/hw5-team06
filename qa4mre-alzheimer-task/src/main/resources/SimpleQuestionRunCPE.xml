@@ -30,6 +30,9 @@
   <delegateAnalysisEngine key="AnswerChoiceCandAnsVectorSimilarityScorer">
       <import name="annotators.AnswerChoiceCandAnsVectorSimilarityScorer"/>
     </delegateAnalysisEngine>
+  <delegateAnalysisEngine key="AnswerCandSentSimilarityMatcher">
+      <import name="annotators.AnswerCandSentSimilarityMatcher"/>
+    </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
     <name>CpeQuestionDescriptor</name>
