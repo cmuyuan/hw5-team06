@@ -115,7 +115,7 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			
 			//iterate through tokens to find the complement of which/what if they're WDT words
 			if (question.getCategory()=="which" | question.getCategory()=="what"){
-			  System.out.println("Question " + (i+1) + ": " + question.getText());
+			  //System.out.println("Question " + (i+1) + ": " + question.getText());
 			  
 			  Boolean whFlag = false;
 			  Boolean nounFlag = false;
@@ -158,7 +158,7 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			
 			//iterate through tokens to find out what type of thing howmany is asking for a quantity of
 			if (question.getCategory()=="howmany"){
-        System.out.println("Question " + (i+1) + ": " + question.getText());
+        //System.out.println("Question " + (i+1) + ": " + question.getText());
         
         Boolean howFlag = false;
         Boolean nounFlag = false;
@@ -190,8 +190,8 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
           }
         }
         
-        System.out.println("Category: " + question.getCategory() + "  \t" + "Asking for " + question.getAskingFor());
-        System.out.println();
+        //System.out.println("Category: " + question.getCategory() + "  \t" + "Asking for " + question.getAskingFor());
+        //System.out.println();
       }
 		}
 		
