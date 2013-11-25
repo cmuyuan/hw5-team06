@@ -106,6 +106,8 @@ public class AnswerCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 	          }
 	          String sentIdx=sentId.replace(docId,"").replace("_", "").trim();
 	          int idx=Integer.parseInt(sentIdx);
+	          if (idx >= sentenceList.size())
+	        	  continue;
 	          Sentence annSentence=sentenceList.get(idx);
 	          
 	          double relScore=Double.parseDouble(doc.get("score").toString());
@@ -196,6 +198,7 @@ public class AnswerCandSentSimilarityMatcher  extends JCasAnnotator_ImplBase{
 	      else{
 	      choiceList.get(j).setAnswerScore(0);
 	      }
+	      System.out.println(choiceList.get(j).getText()+":"+choiceList.get(j).getAnswerScore());
 	      System.out.println("========================================================");
 	      
 			}

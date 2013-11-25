@@ -67,28 +67,25 @@ public class AnswerSelectionByKCandVoting extends JCasAnnotator_ImplBase {
         ArrayList<CandidateAnswer> candAnswerList = Utils.fromFSListToCollection(
                 candSent.getCandAnswerList(), CandidateAnswer.class);
         String selectedAnswer = "";
-        double maxScore = 0;
+        double maxScore = Double.NEGATIVE_INFINITY;
         for (int j = 0; j < candAnswerList.size(); j++) {
 
           CandidateAnswer candAns = candAnswerList.get(j);
           String answer = candAns.getText();
 
-          double totalScore = candAns.getSimilarityScore() + candAns.getSynonymScore()
-                  + candAns.getPMIScore() + candAns.getVectorSimilarityScore()+choiceList.get(candAns.getChoiceIndex()).getAnswerScore();
-
+          double totalScore = 2*candAns.getSimilarityScore() + 0.0*candAns.getSynonymScore()
+                  + candAns.getPMIScore() + 2.5*candAns.getVectorSimilarityScore()+  0.5*choiceList.get(candAns.getChoiceIndex()).getAnswerScore();
+          System.out.println(totalScore);
           if (totalScore > maxScore) {
             maxScore = totalScore;
             selectedAnswer = answer;
           }
         }
-        
-        if(!selectedAnswer.equals("")){
-          Double existingVal = hshAnswer.get(selectedAnswer);
-          if (existingVal == null) {
-            existingVal = new Double(0.0);
-          }
-          hshAnswer.put(selectedAnswer, existingVal + 1.0);
+        Double existingVal = hshAnswer.get(selectedAnswer);
+        if (existingVal == null) {
+          existingVal = new Double(0.0);
         }
+        hshAnswer.put(selectedAnswer, existingVal + 1.0);
       }
 
       String bestChoice = null;
