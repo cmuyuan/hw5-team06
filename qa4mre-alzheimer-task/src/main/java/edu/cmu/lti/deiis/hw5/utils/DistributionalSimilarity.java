@@ -16,7 +16,7 @@ public class DistributionalSimilarity {
 	int vectorSize;
 
 	public void readModel(String filename) throws IOException {
-
+		 filename="/home/richie/git/hw5-skohli/hw5-team06/qa4mre-alzheimer-task/model/alzheimer.tok.model.320";
 		wordVectorMap = new HashMap<String, double[]>();
 		vocab = new ArrayList<String>();
 
@@ -115,6 +115,8 @@ public class DistributionalSimilarity {
 
 	public String[] testModel(String query) {
 
+	//	if(query==null || )
+		
 		String queryArray[] = query.split(" ");
 
 		int a;

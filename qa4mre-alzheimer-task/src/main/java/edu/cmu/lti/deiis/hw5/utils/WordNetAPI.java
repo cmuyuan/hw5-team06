@@ -1,5 +1,6 @@
 package edu.cmu.lti.deiis.hw5.utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,13 @@ public class WordNetAPI {
 		cache = new HashMap<String, Set<String>>();
 		System.setProperty(WordNetConstants.DIR_ATT, WordNetConstants.DIR_PATH);
 		 ds=new DistributionalSimilarity();
+		 String filename = "./model/alzheimer.tok.model.320";
+		 filename="/home/richie/git/hw5-skohli/hw5-team06/qa4mre-alzheimer-task/model/alzheimer.tok.model.320";
+			try {
+				ds.readModel(filename);			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	public static Set<String> getHyponyms(String word, Set<String> set) {
