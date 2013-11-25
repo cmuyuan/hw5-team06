@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Nov 17 17:48:56 EST 2013
- * XML source: C:/Users/gandhe/git/hw5-team06-task/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
+ * Updated by JCasGen Thu Nov 21 18:23:09 EST 2013
+ * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class CandidateAnswer extends Annotation {
   /** @generated
@@ -153,24 +153,6 @@ public class CandidateAnswer extends Annotation {
    
     
   //*--------------*
-  //* Feature: synonymScore
-
-  /** getter for synonymScore - gets 
-   * @generated */
-  public double getSynonymScore() {
-    if (CandidateAnswer_Type.featOkTst && ((CandidateAnswer_Type)jcasType).casFeat_synonymScore == null)
-      jcasType.jcas.throwFeatMissing("synonymScore", "edu.cmu.lti.qalab.types.CandidateAnswer");
-    return jcasType.ll_cas.ll_getDoubleValue(addr, ((CandidateAnswer_Type)jcasType).casFeatCode_synonymScore);}
-    
-  /** setter for synonymScore - sets  
-   * @generated */
-  public void setSynonymScore(double v) {
-    if (CandidateAnswer_Type.featOkTst && ((CandidateAnswer_Type)jcasType).casFeat_synonymScore == null)
-      jcasType.jcas.throwFeatMissing("synonymScore", "edu.cmu.lti.qalab.types.CandidateAnswer");
-    jcasType.ll_cas.ll_setDoubleValue(addr, ((CandidateAnswer_Type)jcasType).casFeatCode_synonymScore, v);}    
-   
-    
-  //*--------------*
   //* Feature: vectorSimilarityScore
 
   /** getter for vectorSimilarityScore - gets 
@@ -186,6 +168,24 @@ public class CandidateAnswer extends Annotation {
     if (CandidateAnswer_Type.featOkTst && ((CandidateAnswer_Type)jcasType).casFeat_vectorSimilarityScore == null)
       jcasType.jcas.throwFeatMissing("vectorSimilarityScore", "edu.cmu.lti.qalab.types.CandidateAnswer");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((CandidateAnswer_Type)jcasType).casFeatCode_vectorSimilarityScore, v);}    
+   
+    
+  //*--------------*
+  //* Feature: synonymScore
+
+  /** getter for synonymScore - gets 
+   * @generated */
+  public double getSynonymScore() {
+    if (CandidateAnswer_Type.featOkTst && ((CandidateAnswer_Type)jcasType).casFeat_synonymScore == null)
+      jcasType.jcas.throwFeatMissing("synonymScore", "edu.cmu.lti.qalab.types.CandidateAnswer");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((CandidateAnswer_Type)jcasType).casFeatCode_synonymScore);}
+    
+  /** setter for synonymScore - sets  
+   * @generated */
+  public void setSynonymScore(double v) {
+    if (CandidateAnswer_Type.featOkTst && ((CandidateAnswer_Type)jcasType).casFeat_synonymScore == null)
+      jcasType.jcas.throwFeatMissing("synonymScore", "edu.cmu.lti.qalab.types.CandidateAnswer");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((CandidateAnswer_Type)jcasType).casFeatCode_synonymScore, v);}    
   }
 
     

@@ -12,7 +12,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Nov 18 17:28:58 EST 2013
+ * Updated by JCasGen Thu Nov 21 18:23:09 EST 2013
  * XML source: C:/Users/Mario/Git/hw5-team06/qa4mre-base/src/main/resources/TypeSystemDescriptor.xml
  * @generated */
 public class Sentence extends Annotation {
@@ -223,6 +223,24 @@ public class Sentence extends Annotation {
     if (Sentence_Type.featOkTst && ((Sentence_Type)jcasType).casFeat_nerList == null)
       jcasType.jcas.throwFeatMissing("nerList", "edu.cmu.lti.qalab.types.Sentence");
     jcasType.ll_cas.ll_setRefValue(addr, ((Sentence_Type)jcasType).casFeatCode_nerList, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: interrogative
+
+  /** getter for interrogative - gets Is this sentence a question? TRUE if yes, FALSE if no
+   * @generated */
+  public boolean getInterrogative() {
+    if (Sentence_Type.featOkTst && ((Sentence_Type)jcasType).casFeat_interrogative == null)
+      jcasType.jcas.throwFeatMissing("interrogative", "edu.cmu.lti.qalab.types.Sentence");
+    return jcasType.ll_cas.ll_getBooleanValue(addr, ((Sentence_Type)jcasType).casFeatCode_interrogative);}
+    
+  /** setter for interrogative - sets Is this sentence a question? TRUE if yes, FALSE if no 
+   * @generated */
+  public void setInterrogative(boolean v) {
+    if (Sentence_Type.featOkTst && ((Sentence_Type)jcasType).casFeat_interrogative == null)
+      jcasType.jcas.throwFeatMissing("interrogative", "edu.cmu.lti.qalab.types.Sentence");
+    jcasType.ll_cas.ll_setBooleanValue(addr, ((Sentence_Type)jcasType).casFeatCode_interrogative, v);}    
   }
 
     
