@@ -45,6 +45,7 @@ public class WordNetAPI {
 
 		WordNetDatabase database = WordNetDatabase.getFileInstance();
 		// database.getBaseFormCandidates(word,SynsetType.ADJECTIVE );
+		
 		set = checkSet(set);
 		set = getNounHyponyms(word, set);
 		set = getVerbHyponyms(word, set);
