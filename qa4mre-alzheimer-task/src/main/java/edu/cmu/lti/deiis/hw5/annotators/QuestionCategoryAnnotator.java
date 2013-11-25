@@ -40,6 +40,9 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			
 			Question question=questionList.get(i);
 			
+			//get tokens from question
+			ArrayList<Token>tokenList= Utils.getTokenListFromQuestion(question);
+			
 			//get dependencies and noun phrases and convert to ArrayList
 			FSList depFSList = question.getDependencies();
       ArrayList<Dependency> depList = new ArrayList<Dependency>();
@@ -47,7 +50,7 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
       
       FSList nounFSList = question.getNounList();
       ArrayList<NounPhrase> nounList = new ArrayList<NounPhrase>();
-      nounList = Utils.fromFSListToCollection(depFSList,NounPhrase.class);
+      nounList = Utils.fromFSListToCollection(nounFSList,NounPhrase.class);
       if (nounList.size()<1){System.out.println("Why is this empty?");}
 			
       //get question text
@@ -109,38 +112,87 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 	      System.out.println("\t\t\t" + numMatch + " " + whWords);  
 			} else {System.out.println();}
 			System.out.println();*/
-			if (question.getCategory()=="which"){
+			
+			//iterate through tokens to find the complement of which/what if they're WDT words
+			if (question.getCategory()=="which" | question.getCategory()=="what"){
 			  System.out.println("Question " + (i+1) + ": " + question.getText());
 			  
-			  int whPos = whichMatch.start();
-			  int minDist = qText.length();
-			  for(int j=0;j<nounList.size();j++){
-			    NounPhrase np = nounList.get(j);
-			    System.out.println(np);
-			    Matcher npMatch = Pattern.compile(np.getText()).matcher(qText);
-			    if (npMatch.find(whPos)){
-			      int nounPos = npMatch.start();
-			      int dist = nounPos - whPos;
-	          if (dist <=  minDist){
-	            minDist = dist;
-	            question.setAskingFor(np.getText());
-	          }
+			  Boolean whFlag = false;
+			  Boolean nounFlag = false;
+			  String asking = "";
+			  for(int j=0;j<tokenList.size();j++){
+			    Token t = tokenList.get(j);
+			    String tPos = t.getPos();
+			    String word = t.getText();
+			    Boolean copula = false;
+			    if (word.equalsIgnoreCase("is")|word.equalsIgnoreCase("are")|word.equalsIgnoreCase("be")){
+			      copula = true;
+			    }
+			    if (tPos.equals("WDT")){
+			      whFlag = true;
+			    } else if (whFlag) {
+			      if (tPos.startsWith("VB") && !copula && !nounFlag){
+			        break;
+			      }else if (tPos.startsWith("NN")){
+              asking+=word+" ";
+              nounFlag = true;
+            }else if (tPos.startsWith("JJ") && !nounFlag){
+              asking+=word+" ";
+            }else if (word.equals("of")){
+              asking = "";
+              nounFlag = false;
+            }else{
+              asking=asking.trim();
+              if(!asking.equals("") && nounFlag){
+                asking=asking.trim();
+                question.setAskingFor(asking);
+                break;
+              } else if (!nounFlag) {asking="";}
+            }
 			    }
 			  }
 			  
-			  for(int j=0;j<depList.size();j++){
-			    Dependency depRel = depList.get(j);
-			    Token dep = depRel.getDependent();
-			    Token gov = depRel.getGovernor();
-			    if (dep.getText().equalsIgnoreCase("which")){
-			      if (question.getAskingFor() == null && gov.getPos().startsWith("NN")){
-			        question.setAskingFor(gov.getText());
-			      }
-			    }
-			  }
-			  System.out.println("Category: " + question.getCategory() + " \t" + "Asking for " + question.getAskingFor());
+			  System.out.println("Category: " + question.getCategory() + "  \t" + "Asking for " + question.getAskingFor());
 			  System.out.println();
-			  }
+			}
+			
+			//iterate through tokens to find out what type of thing howmany is asking for a quantity of
+			if (question.getCategory()=="howmany"){
+        System.out.println("Question " + (i+1) + ": " + question.getText());
+        
+        Boolean howFlag = false;
+        Boolean nounFlag = false;
+        String asking = "";
+        for(int j=0;j<tokenList.size();j++){
+          Token t = tokenList.get(j);
+          String tPos = t.getPos();
+          String word = t.getText();
+          if (tPos.equals("WRB")){
+            howFlag = true;
+            j++;
+          } else if (howFlag) {
+            if (tPos.startsWith("NN")){
+              asking+=word+" ";
+              nounFlag = true;
+            }else if (tPos.startsWith("JJ") && !nounFlag){
+              asking+=word+" ";
+            }else if (word.equals("of")){
+              asking = "";
+              nounFlag = false;
+            }else{
+              asking=asking.trim();
+              if(!asking.equals("") && nounFlag){
+                asking=asking.trim();
+                question.setAskingFor(asking);
+                break;
+              } else if (!nounFlag) {asking="";}
+            }
+          }
+        }
+        
+        System.out.println("Category: " + question.getCategory() + "  \t" + "Asking for " + question.getAskingFor());
+        System.out.println();
+      }
 		}
 		
 		//FSList fsQuestionList=Utils.createQuestionList(aJCas, questionList);

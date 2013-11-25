@@ -43,9 +43,8 @@
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
-        <node>QuestionPhraseAnnotator</node>
         <node>QuestionCategoryAnnotator</node>
-      </fixedFlow>
+        </fixedFlow>
     </flowConstraints>
     <typePriorities/>
     <fsIndexCollection/>
