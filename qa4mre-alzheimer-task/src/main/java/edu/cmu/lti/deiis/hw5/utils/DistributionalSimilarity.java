@@ -48,6 +48,8 @@ public class DistributionalSimilarity {
 				vocab.add(word);
 				wordVectorMap.put(word, wVector);
 				count++;
+				if (count%50000==0)
+					System.out.print(count+"...");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -108,7 +110,10 @@ public class DistributionalSimilarity {
 		double score = 0.0;
 		for (int a = 0; a < vectorSize; a++)
 			score += w1Vector[a] * w2Vector[a];
-		
+		/*if (score==0.0)
+			score=0.5;*/
+		/*else
+			score=1;*/
 		return score;
 
 	}
