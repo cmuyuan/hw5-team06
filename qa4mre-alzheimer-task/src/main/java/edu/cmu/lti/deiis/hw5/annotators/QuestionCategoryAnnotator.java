@@ -51,7 +51,7 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
       FSList nounFSList = question.getNounList();
       ArrayList<NounPhrase> nounList = new ArrayList<NounPhrase>();
       nounList = Utils.fromFSListToCollection(nounFSList,NounPhrase.class);
-      if (nounList.size()<1){System.out.println("Why is this empty?");}
+      //if (nounList.size()<1){System.out.println("Why is this empty?");}
 			
       //get question text
 			String qText = question.getText();
@@ -113,6 +113,8 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			} else {System.out.println();}
 			System.out.println();*/
 			
+			ArrayList<Token> askingTokens = new ArrayList<Token>();
+			
 			//iterate through tokens to find the complement of which/what if they're WDT words
 			if (question.getCategory()=="which" | question.getCategory()=="what"){
 			  //System.out.println("Question " + (i+1) + ": " + question.getText());
@@ -135,19 +137,24 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
 			        break;
 			      }else if (tPos.startsWith("NN")){
               asking+=word+" ";
+              askingTokens.add(t);
               nounFlag = true;
             }else if (tPos.startsWith("JJ") && !nounFlag){
               asking+=word+" ";
+              askingTokens.add(t);
             }else if (word.equals("of")){
+              //SKT nouns: sort, kind, kin, type, manner, variety, class, brand, species, category
               asking = "";
+              askingTokens.clear();
               nounFlag = false;
             }else{
               asking=asking.trim();
               if(!asking.equals("") && nounFlag){
                 asking=asking.trim();
                 question.setAskingFor(asking);
+                question.setAskingForTokens(Utils.fromCollectionToFSList(aJCas,askingTokens));
                 break;
-              } else if (!nounFlag) {asking="";}
+              } else if (!nounFlag) {asking="";askingTokens.clear();}
             }
 			    }
 			  }
@@ -173,19 +180,23 @@ public class QuestionCategoryAnnotator extends JCasAnnotator_ImplBase{
           } else if (howFlag) {
             if (tPos.startsWith("NN")){
               asking+=word+" ";
+              askingTokens.add(t);
               nounFlag = true;
             }else if (tPos.startsWith("JJ") && !nounFlag){
               asking+=word+" ";
+              askingTokens.add(t);
             }else if (word.equals("of")){
               asking = "";
+              askingTokens.clear();
               nounFlag = false;
             }else{
               asking=asking.trim();
               if(!asking.equals("") && nounFlag){
                 asking=asking.trim();
                 question.setAskingFor(asking);
+                question.setAskingForTokens(Utils.fromCollectionToFSList(aJCas,askingTokens));
                 break;
-              } else if (!nounFlag) {asking="";}
+              } else if (!nounFlag) {asking="";askingTokens.clear();}
             }
           }
         }

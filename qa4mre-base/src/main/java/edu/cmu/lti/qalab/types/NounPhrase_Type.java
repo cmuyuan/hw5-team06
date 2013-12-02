@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Thu Nov 21 18:23:09 EST 2013
+ * Updated by JCasGen Mon Dec 02 15:40:24 EST 2013
  * @generated */
 public class NounPhrase_Type extends Annotation_Type {
   /** @generated */
