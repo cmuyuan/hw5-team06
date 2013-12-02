@@ -488,12 +488,12 @@ Different categories of questions require different answers (proper noun, common
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>vectorSimilarityScore</name>
+          <name>synonymScore</name>
           <description/>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
-        <featureDescription>
-          <name>synonymScore</name>
+      <featureDescription>
+          <name>vectorSimilarityScore</name>
           <description/>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>

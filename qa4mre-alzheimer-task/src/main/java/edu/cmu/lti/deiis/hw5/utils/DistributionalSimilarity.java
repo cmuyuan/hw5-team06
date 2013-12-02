@@ -108,6 +108,7 @@ public class DistributionalSimilarity {
 		double score = 0.0;
 		for (int a = 0; a < vectorSize; a++)
 			score += w1Vector[a] * w2Vector[a];
+		
 		return score;
 
 	}
@@ -159,7 +160,13 @@ public class DistributionalSimilarity {
 		for (a = 0; a < topN; a++)
 			System.out.println(bestw[a] + "\t" + bestd[a]);
 	}
-
+	public boolean isOOV(String word){
+		if (vocab.contains(word))
+			return true;
+		else
+			return false;
+				
+	}
 	public static void main(String[] args) throws Exception {
 		DistributionalSimilarity DS = new DistributionalSimilarity();
 		String filename = "C:\\Users\\gandhe\\Dropbox\\Semester 3\\Software_Engineering\\assign5\\background\\word2vec\\alzheimer.tok.model.320";
